@@ -48,23 +48,16 @@
 
     <!-- ======================================================================
      2. Convert to Job Launch Request and set input.file
-     ====================================================================== -->
-    <int:service-activator input-channel="inbound-file-polling-channel"
-                           output-channel="inbound-message-launcher-channel">
-        <bean class="org.springframework.batch.admin.integration.FileToJobLaunchRequestAdapter">
-            <property name="job" ref="fileLoader"/>
-        </bean>
-
-    </int:service-activator>
-
-    <!-- ======================================================================
      3. Launch the Job
      ====================================================================== -->
-    <int:service-activator ref="jobMessageLauncher" input-channel="inbound-message-launcher-channel"
-                           output-channel="logger">
-        <int:poller fixed-rate="500"/>
-    </int:service-activator>
-
+    <int:chain input-channel="inbound-file-polling-channel" output-channel="logger">
+        <int:service-activator>
+            <bean class="org.springframework.batch.admin.integration.FileToJobLaunchRequestAdapter">
+                <property name="job" ref="fileLoader"/>
+            </bean>
+        </int:service-activator>
+        <int:service-activator ref="jobMessageLauncher"/>
+    </int:chain>
 
 
     <int:logging-channel-adapter id="logger" log-full-message="true" level="WARN"/>
@@ -75,12 +68,6 @@
 
     <!-- ################# BEAN DEFINITIONS ################# -->
 
-    <!-- ====================================================================== -->
-    <!-- The Inbound Message Launch Channel -->
-    <!-- ====================================================================== -->
-    <int:channel id="inbound-message-launcher-channel">
-        <int:queue/>
-    </int:channel>
 
     <!-- ====================================================================== -->
     <!-- Thread pool used by the poller -->
