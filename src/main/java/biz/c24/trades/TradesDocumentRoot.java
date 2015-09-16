@@ -22,14 +22,14 @@ import java.util.Arrays;
  * @author C24 Integration Objects;
  * @version $Revision$ $Date$
  * @see
- * biz.c24.trades.TradesDocumentRootElement.TradesDocumentRootCls
+ * biz.c24.trades.TradesDocumentRootElement.TradesDocumentRootDataType
  */
 public class TradesDocumentRoot extends biz.c24.io.api.data.DocumentRoot {
 
     /**
      * Field serialVersionUID.
      */
-    private static final long serialVersionUID = 12L;
+    private static final long serialVersionUID = 14L;
 
     /**
      * Field NATIVE_ELEMENTS.
@@ -42,7 +42,7 @@ public class TradesDocumentRoot extends biz.c24.io.api.data.DocumentRoot {
     private biz.c24.trades.Trades trades;
 
     public TradesDocumentRoot() {
-        this(biz.c24.trades.TradesDocumentRootElement.TradesDocumentRootCls.getInstance().getNullDefiningElementDecl());
+        this(biz.c24.trades.TradesDocumentRootElement.TradesDocumentRootDataType.getInstance().getNullDefiningElementDecl());
     }
 
     public TradesDocumentRoot(biz.c24.io.api.data.Element definingElementDecl) {

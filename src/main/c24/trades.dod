@@ -1,9 +1,8 @@
 <?xml version="1.0" ?>
-<dataModel IOversion="3.1.0" encrypted="false" targetNamespace="http://www.c24.biz/trades" elementFormDefault="Qualified" attributeFormDefault="Unqualified" encoding="UTF-8" hibernateIDGeneratorMethodDefault="native" name="trades.dod" version="0.0.12">
+<dataModel IOversion="3.1.0" encrypted="false" targetNamespace="http://www.c24.biz/trades" elementFormDefault="Qualified" attributeFormDefault="Unqualified" encoding="UTF-8" hibernateIDGeneratorMethodDefault="native" name="trades.dod" version="0.0.14">
   <classification name="File">
     <type>
       <complexType specifyStructure="true" abstract="false" contentModel="Sequence" specialisation="Generic complex" excludeFromDatabase="false" processAsBatch="false" name="trades">
-        <element identifier="false" min="0" max="1" typeRef="Records/Header" name="Header"></element>
         <element identifier="false" min="1" max="-1" typeRef="Records/Trade" name="Trade"></element>
       </complexType>
     </type>
@@ -118,7 +117,7 @@
         </facet>
         <element identifier="false" min="1" max="1" name="ID">
           <type>
-            <atomicSimpleType baseType="#number_int" name="ID">
+            <atomicSimpleType baseType="#number_long" name="ID">
               <facet facetType="number_format">
                 <value>#;'-'#</value>
               </facet>
@@ -127,11 +126,7 @@
         </element>
         <element identifier="false" min="1" max="1" name="TradeDate">
           <type>
-            <atomicSimpleType baseType="#date_generic" name="TradeDate">
-              <facet facetType="date_format">
-                <value>dd/MM/yyyy|false</value>
-              </facet>
-            </atomicSimpleType>
+            <atomicSimpleType baseType="#date_date" name="TradeDate"></atomicSimpleType>
           </type>
         </element>
         <element identifier="false" min="1" max="1" name="BuySell">
@@ -225,11 +220,7 @@
         </element>
         <element identifier="false" min="1" max="1" name="Settlement Date">
           <type>
-            <atomicSimpleType baseType="#date_generic" name="Settlement Date">
-              <facet facetType="date_format">
-                <value>dd/MM/yyyy|false</value>
-              </facet>
-            </atomicSimpleType>
+            <atomicSimpleType baseType="#date_date" name="Settlement Date"></atomicSimpleType>
           </type>
         </element>
       </complexType>

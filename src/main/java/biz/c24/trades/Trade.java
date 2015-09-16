@@ -15,8 +15,8 @@ import java.util.Arrays;
  * 
  * This object is composed of the following <i>elements</i>:
  * <ul>
- * <li><b>ID</b> of type <code>int</code> (1)</li>
- * <li><b>TradeDate</b> of type {@link java.time.LocalDateTime}
+ * <li><b>ID</b> of type <code>long</code> (1)</li>
+ * <li><b>TradeDate</b> of type {@link java.time.LocalDate}
  * (1)</li>
  * <li><b>BuySell</b> of type {@link java.lang.String} (1)</li>
  * <li><b>Currency1</b> of type {@link java.lang.String} (1)</li>
@@ -24,21 +24,21 @@ import java.util.Arrays;
  * <li><b>Exchange Rate</b> of type <code>double</code> (1)</li>
  * <li><b>Currency2</b> of type {@link java.lang.String} (1)</li>
  * <li><b>Amount2</b> of type {@link java.math.BigDecimal} (1)</li>
- * <li><b>Settlement Date</b> of type {@link
- * java.time.LocalDateTime} (1)</li>
+ * <li><b>Settlement Date</b> of type {@link java.time.LocalDate}
+ * (1)</li>
  * </ul>
  * 
  * 
  * @author C24 Integration Objects;
  * @version $Revision$ $Date$
- * @see biz.c24.trades.TradeCls
+ * @see biz.c24.trades.TradeDataType
  */
 public class Trade extends biz.c24.io.api.data.ComplexDataObject {
 
     /**
      * Field serialVersionUID.
      */
-    private static final long serialVersionUID = 12L;
+    private static final long serialVersionUID = 14L;
 
     /**
      * Field NATIVE_ELEMENTS.
@@ -48,7 +48,7 @@ public class Trade extends biz.c24.io.api.data.ComplexDataObject {
     /**
      * Field iD.
      */
-    private int iD;
+    private long iD;
 
     /**
      * Field isiDSet.
@@ -58,7 +58,7 @@ public class Trade extends biz.c24.io.api.data.ComplexDataObject {
     /**
      * Field tradeDate.
      */
-    private java.time.LocalDateTime tradeDate;
+    private java.time.LocalDate tradeDate;
 
     /**
      * Field buySell.
@@ -98,10 +98,10 @@ public class Trade extends biz.c24.io.api.data.ComplexDataObject {
     /**
      * Field settlementDate.
      */
-    private java.time.LocalDateTime settlementDate;
+    private java.time.LocalDate settlementDate;
 
     public Trade() {
-        this(biz.c24.trades.TradeCls.getInstance().getNullDefiningElementDecl());
+        this(biz.c24.trades.TradeDataType.getInstance().getNullDefiningElementDecl());
     }
 
     public Trade(biz.c24.io.api.data.Element definingElementDecl) {
@@ -131,10 +131,10 @@ public class Trade extends biz.c24.io.api.data.ComplexDataObject {
         switch (i)
         {
             case 6:
-                setID(biz.c24.io.api.Utils.intValue(value));
+                setID(biz.c24.io.api.Utils.longValue(value));
                 return;
             case 8:
-                setTradeDate((java.time.LocalDateTime)(value));
+                setTradeDate((java.time.LocalDate)(value));
                 return;
             case 2:
                 setBuySell((java.lang.String) value);
@@ -155,7 +155,7 @@ public class Trade extends biz.c24.io.api.data.ComplexDataObject {
                 setAmount2(biz.c24.io.api.Utils.decimalValue(value));
                 return;
             case 7:
-                setSettlementDate((java.time.LocalDateTime)(value));
+                setSettlementDate((java.time.LocalDate)(value));
                 return;
             default:
                 super.addElement(name, value);
@@ -192,7 +192,7 @@ public class Trade extends biz.c24.io.api.data.ComplexDataObject {
         biz.c24.trades.Trade obj = (biz.c24.trades.Trade) clone;
         obj.isiDSet = this.isiDSet;
         obj.iD = this.iD;
-        obj.tradeDate = (java.time.LocalDateTime) biz.c24.io.api.Utils.cloneDeep(this.tradeDate, obj, "TradeDate");
+        obj.tradeDate = (java.time.LocalDate) biz.c24.io.api.Utils.cloneDeep(this.tradeDate, obj, "TradeDate");
         obj.buySell = (java.lang.String) biz.c24.io.api.Utils.cloneDeep(this.buySell, obj, "BuySell");
         obj.currency1 = (java.lang.String) biz.c24.io.api.Utils.cloneDeep(this.currency1, obj, "Currency1");
         obj.amount1 = (java.math.BigDecimal) biz.c24.io.api.Utils.cloneDeep(this.amount1, obj, "Amount1");
@@ -200,7 +200,7 @@ public class Trade extends biz.c24.io.api.data.ComplexDataObject {
         obj.exchangeRate = this.exchangeRate;
         obj.currency2 = (java.lang.String) biz.c24.io.api.Utils.cloneDeep(this.currency2, obj, "Currency2");
         obj.amount2 = (java.math.BigDecimal) biz.c24.io.api.Utils.cloneDeep(this.amount2, obj, "Amount2");
-        obj.settlementDate = (java.time.LocalDateTime) biz.c24.io.api.Utils.cloneDeep(this.settlementDate, obj, "SettlementDate");
+        obj.settlementDate = (java.time.LocalDate) biz.c24.io.api.Utils.cloneDeep(this.settlementDate, obj, "SettlementDate");
     }
 
     /**
@@ -368,7 +368,7 @@ public class Trade extends biz.c24.io.api.data.ComplexDataObject {
         switch (i)
         {
             case 6:
-                return this.isiDSet ? (this.iD == biz.c24.io.api.Utils.intValue(element) ? 0 : -1) : -1;
+                return this.isiDSet ? (this.iD == biz.c24.io.api.Utils.longValue(element) ? 0 : -1) : -1;
             case 8:
                 return this.tradeDate != null && this.tradeDate.equals(element) ? 0 : -1;
             case 2:
@@ -404,7 +404,7 @@ public class Trade extends biz.c24.io.api.data.ComplexDataObject {
      * 
      * @return The value.
      */
-    public int getID() {
+    public long getID() {
         return this.iD;
     }
 
@@ -455,7 +455,7 @@ public class Trade extends biz.c24.io.api.data.ComplexDataObject {
      * 
      * @return The value.
      */
-    public java.time.LocalDateTime getSettlementDate() {
+    public java.time.LocalDate getSettlementDate() {
         return this.settlementDate;
     }
 
@@ -480,7 +480,7 @@ public class Trade extends biz.c24.io.api.data.ComplexDataObject {
      * 
      * @return The value.
      */
-    public java.time.LocalDateTime getTradeDate() {
+    public java.time.LocalDate getTradeDate() {
         return this.tradeDate;
     }
 
@@ -630,10 +630,10 @@ public class Trade extends biz.c24.io.api.data.ComplexDataObject {
         switch (i)
         {
             case 6:
-                setID(biz.c24.io.api.Utils.intValue(value));
+                setID(biz.c24.io.api.Utils.longValue(value));
                 return;
             case 8:
-                setTradeDate((java.time.LocalDateTime)(value));
+                setTradeDate((java.time.LocalDate)(value));
                 return;
             case 2:
                 setBuySell((java.lang.String) value);
@@ -654,7 +654,7 @@ public class Trade extends biz.c24.io.api.data.ComplexDataObject {
                 setAmount2(biz.c24.io.api.Utils.decimalValue(value));
                 return;
             case 7:
-                setSettlementDate((java.time.LocalDateTime)(value));
+                setSettlementDate((java.time.LocalDate)(value));
                 return;
             default:
                 super.setElement(name, index, value);
@@ -678,7 +678,7 @@ public class Trade extends biz.c24.io.api.data.ComplexDataObject {
      * @param value
      * @param value The new value.
      */
-    public void setID(int value) {
+    public void setID(long value) {
         this.iD = value;
         this.isiDSet = true;
     }
@@ -689,7 +689,7 @@ public class Trade extends biz.c24.io.api.data.ComplexDataObject {
      * @param value
      * @param value The new value.
      */
-    public void setSettlementDate(java.time.LocalDateTime value) {
+    public void setSettlementDate(java.time.LocalDate value) {
         this.settlementDate = value;
     }
 
@@ -699,7 +699,7 @@ public class Trade extends biz.c24.io.api.data.ComplexDataObject {
      * @param value
      * @param value The new value.
      */
-    public void setTradeDate(java.time.LocalDateTime value) {
+    public void setTradeDate(java.time.LocalDate value) {
         this.tradeDate = value;
     }
 
@@ -711,7 +711,7 @@ public class Trade extends biz.c24.io.api.data.ComplexDataObject {
     private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
         out.writeBoolean(this.isiDSet);
         if (this.isiDSet)
-            out.writeInt(this.iD);
+            out.writeLong(this.iD);
         out.writeObject(this.tradeDate);
         out.writeObject(this.buySell);
         out.writeObject(this.currency1);
@@ -732,8 +732,8 @@ public class Trade extends biz.c24.io.api.data.ComplexDataObject {
     private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
         this.isiDSet = in.readBoolean();
         if (this.isiDSet)
-            this.iD = in.readInt();
-        this.tradeDate = (java.time.LocalDateTime) in.readObject();
+            this.iD = in.readLong();
+        this.tradeDate = (java.time.LocalDate) in.readObject();
         this.buySell = (java.lang.String) in.readObject();
         this.currency1 = (java.lang.String) in.readObject();
         this.amount1 = (java.math.BigDecimal) in.readObject();
@@ -742,7 +742,7 @@ public class Trade extends biz.c24.io.api.data.ComplexDataObject {
             this.exchangeRate = in.readDouble();
         this.currency2 = (java.lang.String) in.readObject();
         this.amount2 = (java.math.BigDecimal) in.readObject();
-        this.settlementDate = (java.time.LocalDateTime) in.readObject();
+        this.settlementDate = (java.time.LocalDate) in.readObject();
     }
 
 }

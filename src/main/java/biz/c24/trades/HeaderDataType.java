@@ -5,7 +5,7 @@
 package biz.c24.trades;
 
 /**
- * Class HeaderCls.The Header complex data type.
+ * Class HeaderDataType.The Header complex data type.
  * 
  * 
  * 
@@ -13,19 +13,19 @@ package biz.c24.trades;
  * @version $Revision$ $Date$
  * @see biz.c24.trades.Header
  */
-public class HeaderCls extends biz.c24.io.api.data.ComplexDataType {
+public class HeaderDataType extends biz.c24.io.api.data.ComplexDataType {
 
     /**
      * Field instance.
      */
-    protected static volatile HeaderCls instance;
+    protected static volatile HeaderDataType instance;
 
     /**
      * Field initialized.
      */
     private static volatile boolean initialized;
 
-    protected HeaderCls() {
+    protected HeaderDataType() {
     }
 
     /**
@@ -40,7 +40,7 @@ public class HeaderCls extends biz.c24.io.api.data.ComplexDataType {
             {
                 if (instance == null)
                 {
-                    instance = new biz.c24.trades.HeaderCls();
+                    instance = new biz.c24.trades.HeaderDataType();
                     instance.init();
                     initialized = true;
                 }
@@ -64,27 +64,27 @@ public class HeaderCls extends biz.c24.io.api.data.ComplexDataType {
         setDelimiterLocation(biz.c24.io.api.data.DelimiterLocationEnum.INFIX);
         setDelimiterPlaceholder(true);
         setDelimiterFieldWrapper(new String[] {new String(new char[] {0x22})});
-        addElementDecl(element = new biz.c24.io.api.data.Element("ID", 1, 1, biz.c24.trades.HeaderCls.IDCls.class, biz.c24.trades.TradesDataModel.getInstance()));
+        addElementDecl(element = new biz.c24.io.api.data.Element("ID", 1, 1, biz.c24.trades.HeaderDataType.IDDataType.class, biz.c24.trades.TradesDataModel.getInstance()));
         element.setIgnoredElement(false);
-        addElementDecl(element = new biz.c24.io.api.data.Element("TradeDate", 1, 1, biz.c24.trades.HeaderCls.TradeDateCls.class, biz.c24.trades.TradesDataModel.getInstance()));
+        addElementDecl(element = new biz.c24.io.api.data.Element("TradeDate", 1, 1, biz.c24.trades.HeaderDataType.TradeDateDataType.class, biz.c24.trades.TradesDataModel.getInstance()));
         element.setIgnoredElement(false);
-        addElementDecl(element = new biz.c24.io.api.data.Element("BuySell", 1, 1, biz.c24.trades.HeaderCls.BuySellCls.class, biz.c24.trades.TradesDataModel.getInstance()));
+        addElementDecl(element = new biz.c24.io.api.data.Element("BuySell", 1, 1, biz.c24.trades.HeaderDataType.BuySellDataType.class, biz.c24.trades.TradesDataModel.getInstance()));
         element.setIgnoredElement(false);
-        addElementDecl(element = new biz.c24.io.api.data.Element("Currency1", 1, 1, biz.c24.trades.HeaderCls.Currency1Cls.class, biz.c24.trades.TradesDataModel.getInstance()));
+        addElementDecl(element = new biz.c24.io.api.data.Element("Currency1", 1, 1, biz.c24.trades.HeaderDataType.Currency1DataType.class, biz.c24.trades.TradesDataModel.getInstance()));
         element.setIgnoredElement(false);
-        addElementDecl(element = new biz.c24.io.api.data.Element("Amount1", 1, 1, biz.c24.trades.HeaderCls.Amount1Cls.class, biz.c24.trades.TradesDataModel.getInstance()));
+        addElementDecl(element = new biz.c24.io.api.data.Element("Amount1", 1, 1, biz.c24.trades.HeaderDataType.Amount1DataType.class, biz.c24.trades.TradesDataModel.getInstance()));
         element.setIgnoredElement(false);
-        addElementDecl(element = new biz.c24.io.api.data.Element("ExchangeRate", 1, 1, biz.c24.trades.HeaderCls.ExchangeRateCls.class, biz.c24.trades.TradesDataModel.getInstance()));
+        addElementDecl(element = new biz.c24.io.api.data.Element("ExchangeRate", 1, 1, biz.c24.trades.HeaderDataType.ExchangeRateDataType.class, biz.c24.trades.TradesDataModel.getInstance()));
         element.setDatabaseColumnName("Exchange Rate");
         element.setIgnoredElement(false);
-        addElementDecl(element = new biz.c24.io.api.data.Element("Currency2", 1, 1, biz.c24.trades.HeaderCls.Currency2Cls.class, biz.c24.trades.TradesDataModel.getInstance()));
+        addElementDecl(element = new biz.c24.io.api.data.Element("Currency2", 1, 1, biz.c24.trades.HeaderDataType.Currency2DataType.class, biz.c24.trades.TradesDataModel.getInstance()));
         element.setIgnoredElement(false);
-        addElementDecl(element = new biz.c24.io.api.data.Element("Amount2", 1, 1, biz.c24.trades.HeaderCls.Amount2Cls.class, biz.c24.trades.TradesDataModel.getInstance()));
+        addElementDecl(element = new biz.c24.io.api.data.Element("Amount2", 1, 1, biz.c24.trades.HeaderDataType.Amount2DataType.class, biz.c24.trades.TradesDataModel.getInstance()));
         element.setIgnoredElement(false);
-        addElementDecl(element = new biz.c24.io.api.data.Element("SettlmentDate", 1, 1, biz.c24.trades.HeaderCls.SettlmentDateCls.class, biz.c24.trades.TradesDataModel.getInstance()));
+        addElementDecl(element = new biz.c24.io.api.data.Element("SettlmentDate", 1, 1, biz.c24.trades.HeaderDataType.SettlmentDateDataType.class, biz.c24.trades.TradesDataModel.getInstance()));
         element.setDatabaseColumnName("Settlment Date");
         element.setIgnoredElement(false);
-        addElementDecl(element = new biz.c24.io.api.data.Element("anyType", 0, 1, biz.c24.trades.HeaderCls.AnyTypeCls.class, biz.c24.trades.TradesDataModel.getInstance()));
+        addElementDecl(element = new biz.c24.io.api.data.Element("anyType", 0, 1, biz.c24.trades.HeaderDataType.AnyTypeDataType.class, biz.c24.trades.TradesDataModel.getInstance()));
         element.setIgnoredElement(false);
     }
 
@@ -95,26 +95,26 @@ public class HeaderCls extends biz.c24.io.api.data.ComplexDataType {
     }
 
     /**
-     * Class Amount1Cls.The Amount1 atomic simple data type.
+     * Class Amount1DataType.The Amount1 atomic simple data type.
      * 
      * 
      * 
      * @author C24 Integration Objects;
      * @version $Revision$ $Date$
      */
-    public static class Amount1Cls extends biz.c24.io.api.data.GenericStringDataType {
+    public static class Amount1DataType extends biz.c24.io.api.data.GenericStringDataType {
 
         /**
          * Field instance.
          */
-        protected static volatile biz.c24.trades.HeaderCls.Amount1Cls instance;
+        protected static volatile biz.c24.trades.HeaderDataType.Amount1DataType instance;
 
         /**
          * Field initialized.
          */
         private static volatile boolean initialized;
 
-        protected Amount1Cls() {
+        protected Amount1DataType() {
         }
 
         /**
@@ -129,7 +129,7 @@ public class HeaderCls extends biz.c24.io.api.data.ComplexDataType {
                 {
                     if (instance == null)
                     {
-                        instance = new biz.c24.trades.HeaderCls.Amount1Cls();
+                        instance = new biz.c24.trades.HeaderDataType.Amount1DataType();
                         instance.init();
                         initialized = true;
                     }
@@ -157,26 +157,26 @@ public class HeaderCls extends biz.c24.io.api.data.ComplexDataType {
     }
 
     /**
-     * Class Amount2Cls.The Amount2 atomic simple data type.
+     * Class Amount2DataType.The Amount2 atomic simple data type.
      * 
      * 
      * 
      * @author C24 Integration Objects;
      * @version $Revision$ $Date$
      */
-    public static class Amount2Cls extends biz.c24.io.api.data.GenericStringDataType {
+    public static class Amount2DataType extends biz.c24.io.api.data.GenericStringDataType {
 
         /**
          * Field instance.
          */
-        protected static volatile biz.c24.trades.HeaderCls.Amount2Cls instance;
+        protected static volatile biz.c24.trades.HeaderDataType.Amount2DataType instance;
 
         /**
          * Field initialized.
          */
         private static volatile boolean initialized;
 
-        protected Amount2Cls() {
+        protected Amount2DataType() {
         }
 
         /**
@@ -191,7 +191,7 @@ public class HeaderCls extends biz.c24.io.api.data.ComplexDataType {
                 {
                     if (instance == null)
                     {
-                        instance = new biz.c24.trades.HeaderCls.Amount2Cls();
+                        instance = new biz.c24.trades.HeaderDataType.Amount2DataType();
                         instance.init();
                         initialized = true;
                     }
@@ -219,26 +219,26 @@ public class HeaderCls extends biz.c24.io.api.data.ComplexDataType {
     }
 
     /**
-     * Class AnyTypeCls.The anyType atomic simple data type.
+     * Class AnyTypeDataType.The anyType atomic simple data type.
      * 
      * 
      * 
      * @author C24 Integration Objects;
      * @version $Revision$ $Date$
      */
-    public static class AnyTypeCls extends biz.c24.io.api.data.GenericStringDataType {
+    public static class AnyTypeDataType extends biz.c24.io.api.data.GenericStringDataType {
 
         /**
          * Field instance.
          */
-        protected static volatile biz.c24.trades.HeaderCls.AnyTypeCls instance;
+        protected static volatile biz.c24.trades.HeaderDataType.AnyTypeDataType instance;
 
         /**
          * Field initialized.
          */
         private static volatile boolean initialized;
 
-        protected AnyTypeCls() {
+        protected AnyTypeDataType() {
         }
 
         /**
@@ -253,7 +253,7 @@ public class HeaderCls extends biz.c24.io.api.data.ComplexDataType {
                 {
                     if (instance == null)
                     {
-                        instance = new biz.c24.trades.HeaderCls.AnyTypeCls();
+                        instance = new biz.c24.trades.HeaderDataType.AnyTypeDataType();
                         instance.init();
                         initialized = true;
                     }
@@ -281,26 +281,26 @@ public class HeaderCls extends biz.c24.io.api.data.ComplexDataType {
     }
 
     /**
-     * Class BuySellCls.The BuySell atomic simple data type.
+     * Class BuySellDataType.The BuySell atomic simple data type.
      * 
      * 
      * 
      * @author C24 Integration Objects;
      * @version $Revision$ $Date$
      */
-    public static class BuySellCls extends biz.c24.io.api.data.GenericStringDataType {
+    public static class BuySellDataType extends biz.c24.io.api.data.GenericStringDataType {
 
         /**
          * Field instance.
          */
-        protected static volatile biz.c24.trades.HeaderCls.BuySellCls instance;
+        protected static volatile biz.c24.trades.HeaderDataType.BuySellDataType instance;
 
         /**
          * Field initialized.
          */
         private static volatile boolean initialized;
 
-        protected BuySellCls() {
+        protected BuySellDataType() {
         }
 
         /**
@@ -315,7 +315,7 @@ public class HeaderCls extends biz.c24.io.api.data.ComplexDataType {
                 {
                     if (instance == null)
                     {
-                        instance = new biz.c24.trades.HeaderCls.BuySellCls();
+                        instance = new biz.c24.trades.HeaderDataType.BuySellDataType();
                         instance.init();
                         initialized = true;
                     }
@@ -343,26 +343,27 @@ public class HeaderCls extends biz.c24.io.api.data.ComplexDataType {
     }
 
     /**
-     * Class Currency1Cls.The Currency1 atomic simple data type.
+     * Class Currency1DataType.The Currency1 atomic simple data
+     * type.
      * 
      * 
      * 
      * @author C24 Integration Objects;
      * @version $Revision$ $Date$
      */
-    public static class Currency1Cls extends biz.c24.io.api.data.GenericStringDataType {
+    public static class Currency1DataType extends biz.c24.io.api.data.GenericStringDataType {
 
         /**
          * Field instance.
          */
-        protected static volatile biz.c24.trades.HeaderCls.Currency1Cls instance;
+        protected static volatile biz.c24.trades.HeaderDataType.Currency1DataType instance;
 
         /**
          * Field initialized.
          */
         private static volatile boolean initialized;
 
-        protected Currency1Cls() {
+        protected Currency1DataType() {
         }
 
         /**
@@ -377,7 +378,7 @@ public class HeaderCls extends biz.c24.io.api.data.ComplexDataType {
                 {
                     if (instance == null)
                     {
-                        instance = new biz.c24.trades.HeaderCls.Currency1Cls();
+                        instance = new biz.c24.trades.HeaderDataType.Currency1DataType();
                         instance.init();
                         initialized = true;
                     }
@@ -405,26 +406,27 @@ public class HeaderCls extends biz.c24.io.api.data.ComplexDataType {
     }
 
     /**
-     * Class Currency2Cls.The Currency2 atomic simple data type.
+     * Class Currency2DataType.The Currency2 atomic simple data
+     * type.
      * 
      * 
      * 
      * @author C24 Integration Objects;
      * @version $Revision$ $Date$
      */
-    public static class Currency2Cls extends biz.c24.io.api.data.GenericStringDataType {
+    public static class Currency2DataType extends biz.c24.io.api.data.GenericStringDataType {
 
         /**
          * Field instance.
          */
-        protected static volatile biz.c24.trades.HeaderCls.Currency2Cls instance;
+        protected static volatile biz.c24.trades.HeaderDataType.Currency2DataType instance;
 
         /**
          * Field initialized.
          */
         private static volatile boolean initialized;
 
-        protected Currency2Cls() {
+        protected Currency2DataType() {
         }
 
         /**
@@ -439,7 +441,7 @@ public class HeaderCls extends biz.c24.io.api.data.ComplexDataType {
                 {
                     if (instance == null)
                     {
-                        instance = new biz.c24.trades.HeaderCls.Currency2Cls();
+                        instance = new biz.c24.trades.HeaderDataType.Currency2DataType();
                         instance.init();
                         initialized = true;
                     }
@@ -467,27 +469,27 @@ public class HeaderCls extends biz.c24.io.api.data.ComplexDataType {
     }
 
     /**
-     * Class ExchangeRateCls.The Exchange Rate atomic simple data
-     * type.
+     * Class ExchangeRateDataType.The Exchange Rate atomic simple
+     * data type.
      * 
      * 
      * 
      * @author C24 Integration Objects;
      * @version $Revision$ $Date$
      */
-    public static class ExchangeRateCls extends biz.c24.io.api.data.GenericStringDataType {
+    public static class ExchangeRateDataType extends biz.c24.io.api.data.GenericStringDataType {
 
         /**
          * Field instance.
          */
-        protected static volatile biz.c24.trades.HeaderCls.ExchangeRateCls instance;
+        protected static volatile biz.c24.trades.HeaderDataType.ExchangeRateDataType instance;
 
         /**
          * Field initialized.
          */
         private static volatile boolean initialized;
 
-        protected ExchangeRateCls() {
+        protected ExchangeRateDataType() {
         }
 
         /**
@@ -502,7 +504,7 @@ public class HeaderCls extends biz.c24.io.api.data.ComplexDataType {
                 {
                     if (instance == null)
                     {
-                        instance = new biz.c24.trades.HeaderCls.ExchangeRateCls();
+                        instance = new biz.c24.trades.HeaderDataType.ExchangeRateDataType();
                         instance.init();
                         initialized = true;
                     }
@@ -531,26 +533,26 @@ public class HeaderCls extends biz.c24.io.api.data.ComplexDataType {
     }
 
     /**
-     * Class IDCls.The ID atomic simple data type.
+     * Class IDDataType.The ID atomic simple data type.
      * 
      * 
      * 
      * @author C24 Integration Objects;
      * @version $Revision$ $Date$
      */
-    public static class IDCls extends biz.c24.io.api.data.GenericStringDataType {
+    public static class IDDataType extends biz.c24.io.api.data.GenericStringDataType {
 
         /**
          * Field instance.
          */
-        protected static volatile biz.c24.trades.HeaderCls.IDCls instance;
+        protected static volatile biz.c24.trades.HeaderDataType.IDDataType instance;
 
         /**
          * Field initialized.
          */
         private static volatile boolean initialized;
 
-        protected IDCls() {
+        protected IDDataType() {
         }
 
         /**
@@ -565,7 +567,7 @@ public class HeaderCls extends biz.c24.io.api.data.ComplexDataType {
                 {
                     if (instance == null)
                     {
-                        instance = new biz.c24.trades.HeaderCls.IDCls();
+                        instance = new biz.c24.trades.HeaderDataType.IDDataType();
                         instance.init();
                         initialized = true;
                     }
@@ -593,27 +595,27 @@ public class HeaderCls extends biz.c24.io.api.data.ComplexDataType {
     }
 
     /**
-     * Class SettlmentDateCls.The Settlment Date atomic simple data
-     * type.
+     * Class SettlmentDateDataType.The Settlment Date atomic simple
+     * data type.
      * 
      * 
      * 
      * @author C24 Integration Objects;
      * @version $Revision$ $Date$
      */
-    public static class SettlmentDateCls extends biz.c24.io.api.data.LocalDateDataType {
+    public static class SettlmentDateDataType extends biz.c24.io.api.data.LocalDateDataType {
 
         /**
          * Field instance.
          */
-        protected static volatile biz.c24.trades.HeaderCls.SettlmentDateCls instance;
+        protected static volatile biz.c24.trades.HeaderDataType.SettlmentDateDataType instance;
 
         /**
          * Field initialized.
          */
         private static volatile boolean initialized;
 
-        protected SettlmentDateCls() {
+        protected SettlmentDateDataType() {
         }
 
         /**
@@ -628,7 +630,7 @@ public class HeaderCls extends biz.c24.io.api.data.ComplexDataType {
                 {
                     if (instance == null)
                     {
-                        instance = new biz.c24.trades.HeaderCls.SettlmentDateCls();
+                        instance = new biz.c24.trades.HeaderDataType.SettlmentDateDataType();
                         instance.init();
                         initialized = true;
                     }
@@ -656,26 +658,27 @@ public class HeaderCls extends biz.c24.io.api.data.ComplexDataType {
     }
 
     /**
-     * Class TradeDateCls.The TradeDate atomic simple data type.
+     * Class TradeDateDataType.The TradeDate atomic simple data
+     * type.
      * 
      * 
      * 
      * @author C24 Integration Objects;
      * @version $Revision$ $Date$
      */
-    public static class TradeDateCls extends biz.c24.io.api.data.LocalDateDataType {
+    public static class TradeDateDataType extends biz.c24.io.api.data.LocalDateDataType {
 
         /**
          * Field instance.
          */
-        protected static volatile biz.c24.trades.HeaderCls.TradeDateCls instance;
+        protected static volatile biz.c24.trades.HeaderDataType.TradeDateDataType instance;
 
         /**
          * Field initialized.
          */
         private static volatile boolean initialized;
 
-        protected TradeDateCls() {
+        protected TradeDateDataType() {
         }
 
         /**
@@ -690,7 +693,7 @@ public class HeaderCls extends biz.c24.io.api.data.ComplexDataType {
                 {
                     if (instance == null)
                     {
-                        instance = new biz.c24.trades.HeaderCls.TradeDateCls();
+                        instance = new biz.c24.trades.HeaderDataType.TradeDateDataType();
                         instance.init();
                         initialized = true;
                     }

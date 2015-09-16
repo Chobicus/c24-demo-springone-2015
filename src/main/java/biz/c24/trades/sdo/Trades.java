@@ -16,7 +16,7 @@ public class Trades extends biz.c24.io.api.data.IoSimpleDataObject {
     /**
      * Field serialVersionUID.
      */
-    private static final long serialVersionUID = 12L;
+    private static final long serialVersionUID = 14L;
 
     /**
      * Field sdoTypeHandler.
@@ -52,38 +52,11 @@ public class Trades extends biz.c24.io.api.data.IoSimpleDataObject {
     }
 
     /**
-     * Returns the number of bits in the bitmask that this type
-     * uses to indicate the presence of optional attributes and
-     * elements.
-     */
-    public int getBitmaskLength() {
-        return 1;
-    }
-
-    /**
      * Returns the fully qualified class name of this class's
      * corresponding CDO
      */
     public String getComplexDataObjectName() {
         return "biz.c24.trades.Trades";
-    }
-
-    /**
-     * Gets the value of Header (0..1).
-     * 
-     * @return The value.
-     */
-    public biz.c24.trades.sdo.Header getHeader() {
-        int index = getBufferOffset();
-        int bitmask0 = index;
-        index += sdoTypeHandler.skipBitmask(data, index, getBitmaskLength(), getBitmaskLength());
-        if (!sdoTypeHandler.isBitSet(data, bitmask0, 0, getBitmaskLength(), getBitmaskLength())) {
-            return null;
-        }
-
-        // Skip over its persisted length
-        index += sdoTypeHandler.skipInt(data, index);
-        return biz.c24.trades.sdo.Header.allocate(data, index);
     }
 
     /**
@@ -94,13 +67,6 @@ public class Trades extends biz.c24.io.api.data.IoSimpleDataObject {
      */
     public java.util.List<biz.c24.trades.sdo.Trade> getTrade() {
         int index = getBufferOffset();
-        // Skipping component 'Header'
-        int bitmask0 = index;
-        index += sdoTypeHandler.skipBitmask(data, index, getBitmaskLength(), getBitmaskLength());
-        if (sdoTypeHandler.isBitSet(data, bitmask0, 0, getBitmaskLength(), getBitmaskLength())) {
-            index += sdoTypeHandler.skipBytes(data, index);
-        }
-
         int cardinalityOfTrade = sdoTypeHandler.readInt(data, index);
         index += sdoTypeHandler.sizeOf(cardinalityOfTrade);
         java.util.List<biz.c24.trades.sdo.Trade>  list = new java.util.ArrayList<biz.c24.trades.sdo.Trade>(cardinalityOfTrade);
@@ -122,13 +88,6 @@ public class Trades extends biz.c24.io.api.data.IoSimpleDataObject {
      */
     public biz.c24.trades.sdo.Trade getTrade(int ordinal) {
         int index = getBufferOffset();
-        // Skipping component 'Header'
-        int bitmask0 = index;
-        index += sdoTypeHandler.skipBitmask(data, index, getBitmaskLength(), getBitmaskLength());
-        if (sdoTypeHandler.isBitSet(data, bitmask0, 0, getBitmaskLength(), getBitmaskLength())) {
-            index += sdoTypeHandler.skipBytes(data, index);
-        }
-
         int cardinalityOfTrade = sdoTypeHandler.readInt(data, index);
         index += sdoTypeHandler.sizeOf(cardinalityOfTrade);
         for(int i=0; i<ordinal; i++) {

@@ -5,7 +5,7 @@
 package biz.c24.trades;
 
 /**
- * Class TradesCls.The trades complex data type.
+ * Class TradesDataType.The trades complex data type.
  * 
  * 
  * 
@@ -13,19 +13,19 @@ package biz.c24.trades;
  * @version $Revision$ $Date$
  * @see biz.c24.trades.Trades
  */
-public class TradesCls extends biz.c24.io.api.data.ComplexDataType {
+public class TradesDataType extends biz.c24.io.api.data.ComplexDataType {
 
     /**
      * Field instance.
      */
-    protected static volatile TradesCls instance;
+    protected static volatile TradesDataType instance;
 
     /**
      * Field initialized.
      */
     private static volatile boolean initialized;
 
-    protected TradesCls() {
+    protected TradesDataType() {
     }
 
     /**
@@ -40,7 +40,7 @@ public class TradesCls extends biz.c24.io.api.data.ComplexDataType {
             {
                 if (instance == null)
                 {
-                    instance = new biz.c24.trades.TradesCls();
+                    instance = new biz.c24.trades.TradesDataType();
                     instance.init();
                     initialized = true;
                 }
@@ -58,9 +58,7 @@ public class TradesCls extends biz.c24.io.api.data.ComplexDataType {
         setValidObjectClass(biz.c24.trades.Trades.class);
         setContentModel(biz.c24.io.api.data.ContentModelEnum.SEQUENCE);
         biz.c24.io.api.data.Element element = null;
-        addElementDecl(element = new biz.c24.io.api.data.Element("Header", 0, 1, biz.c24.trades.HeaderCls.class, biz.c24.trades.TradesDataModel.getInstance()));
-        element.setIgnoredElement(false);
-        addElementDecl(element = new biz.c24.io.api.data.Element("Trade", 1, biz.c24.io.api.data.DataComponent.CARDINALITY_UNBOUNDED, biz.c24.trades.TradeCls.class, biz.c24.trades.TradesDataModel.getInstance()));
+        addElementDecl(element = new biz.c24.io.api.data.Element("Trade", 1, biz.c24.io.api.data.DataComponent.CARDINALITY_UNBOUNDED, biz.c24.trades.TradeDataType.class, biz.c24.trades.TradesDataModel.getInstance()));
         element.setIgnoredElement(false);
     }
 

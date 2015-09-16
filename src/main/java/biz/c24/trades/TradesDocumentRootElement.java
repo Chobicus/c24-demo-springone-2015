@@ -29,7 +29,7 @@ public class TradesDocumentRootElement extends biz.c24.io.api.data.Element {
     }
 
     private TradesDocumentRootElement(boolean init) {
-        super("DocumentRoot", 1, 1, biz.c24.trades.TradesDocumentRootElement.TradesDocumentRootCls.class, biz.c24.trades.TradesDataModel.getInstance());
+        super("DocumentRoot", 1, 1, biz.c24.trades.TradesDocumentRootElement.TradesDocumentRootDataType.class, biz.c24.trades.TradesDataModel.getInstance());
 
         if (init)
             init();
@@ -54,6 +54,50 @@ public class TradesDocumentRootElement extends biz.c24.io.api.data.Element {
     }
 
     /**
+     * Test method. Reads in a file (called <code>arg[0]</code>),
+     * parses it, prints the output to Standard.out and validates
+     * it.
+     * 
+     * @param args Should be of length one, where the first element
+     * is the filename to read from.
+     * @param args
+     */
+    public static void main(java.lang.String[] args) {
+        if (args.length == 1)
+        {
+            biz.c24.io.api.data.Element element = biz.c24.trades.TradesDocumentRootElement.getInstance();
+            org.apache.log4j.Appender appender = new org.apache.log4j.ConsoleAppender(new org.apache.log4j.SimpleLayout());
+            element.getLog().addAppender(appender);
+            element.getLog().setLevel(org.apache.log4j.Level.OFF); // change this to see console logging
+
+            try
+            {
+                java.lang.System.out.println("Parsing... ");
+                biz.c24.io.api.presentation.Source source = element.getModel().source();
+                source.setInputStream(new java.io.FileInputStream(args[0]));
+                biz.c24.io.api.data.ComplexDataObject bean = source.readObject(element);
+                source.getInputStream().close();
+                java.lang.System.out.println(bean.toString());
+
+                java.lang.System.out.println("Validating... ");
+                new biz.c24.io.api.data.ValidationManager().validateByException(bean);
+
+                java.lang.System.out.println("Finished");
+            }
+            catch (java.lang.Exception e)
+            {
+                e.printStackTrace();
+            }
+            finally
+            {
+                element.getLog().removeAppender(appender);
+            }
+        }
+        else
+            java.lang.System.out.println("Usage: java biz.c24.trades.TradesDocumentRootElement <filename>");
+    }
+
+    /**
      */
     private void init() {
         setDatabaseColumnName("Document Root");
@@ -61,8 +105,8 @@ public class TradesDocumentRootElement extends biz.c24.io.api.data.Element {
     }
 
     /**
-     * Class TradesDocumentRootCls.The Document Root complex data
-     * type.
+     * Class TradesDocumentRootDataType.The Document Root complex
+     * data type.
      * 
      * 
      * 
@@ -70,19 +114,19 @@ public class TradesDocumentRootElement extends biz.c24.io.api.data.Element {
      * @version $Revision$ $Date$
      * @see biz.c24.trades.TradesDocumentRoot
      */
-    public static class TradesDocumentRootCls extends biz.c24.io.api.data.ComplexDataType {
+    public static class TradesDocumentRootDataType extends biz.c24.io.api.data.ComplexDataType {
 
         /**
          * Field instance.
          */
-        protected static volatile biz.c24.trades.TradesDocumentRootElement.TradesDocumentRootCls instance;
+        protected static volatile biz.c24.trades.TradesDocumentRootElement.TradesDocumentRootDataType instance;
 
         /**
          * Field initialized.
          */
         private static volatile boolean initialized;
 
-        protected TradesDocumentRootCls() {
+        protected TradesDocumentRootDataType() {
         }
 
         /**
@@ -97,7 +141,7 @@ public class TradesDocumentRootElement extends biz.c24.io.api.data.Element {
                 {
                     if (instance == null)
                     {
-                        instance = new biz.c24.trades.TradesDocumentRootElement.TradesDocumentRootCls();
+                        instance = new biz.c24.trades.TradesDocumentRootElement.TradesDocumentRootDataType();
                         instance.init();
                         initialized = true;
                     }
@@ -117,7 +161,7 @@ public class TradesDocumentRootElement extends biz.c24.io.api.data.Element {
             setValidObjectClass(biz.c24.trades.TradesDocumentRoot.class);
             setContentModel(biz.c24.io.api.data.ContentModelEnum.CHOICE);
             biz.c24.io.api.data.Element element = null;
-            addElementDecl(element = new biz.c24.io.api.data.Element("trades", 1, 1, biz.c24.trades.TradesCls.class, biz.c24.trades.TradesDataModel.getInstance()));
+            addElementDecl(element = new biz.c24.io.api.data.Element("trades", 1, 1, biz.c24.trades.TradesDataType.class, biz.c24.trades.TradesDataModel.getInstance()));
             element.setIgnoredElement(false);
         }
 

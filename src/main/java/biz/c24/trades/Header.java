@@ -33,14 +33,14 @@ import java.util.Arrays;
  * 
  * @author C24 Integration Objects;
  * @version $Revision$ $Date$
- * @see biz.c24.trades.HeaderCls
+ * @see biz.c24.trades.HeaderDataType
  */
 public class Header extends biz.c24.io.api.data.ComplexDataObject {
 
     /**
      * Field serialVersionUID.
      */
-    private static final long serialVersionUID = 12L;
+    private static final long serialVersionUID = 14L;
 
     /**
      * Field NATIVE_ELEMENTS.
@@ -98,7 +98,7 @@ public class Header extends biz.c24.io.api.data.ComplexDataObject {
     private java.lang.String anyType;
 
     public Header() {
-        this(biz.c24.trades.HeaderCls.getInstance().getNullDefiningElementDecl());
+        this(biz.c24.trades.HeaderDataType.getInstance().getNullDefiningElementDecl());
     }
 
     public Header(biz.c24.io.api.data.Element definingElementDecl) {

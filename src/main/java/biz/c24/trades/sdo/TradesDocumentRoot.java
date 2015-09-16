@@ -16,7 +16,7 @@ public class TradesDocumentRoot extends biz.c24.io.api.data.IoSimpleDataObject {
     /**
      * Field serialVersionUID.
      */
-    private static final long serialVersionUID = 12L;
+    private static final long serialVersionUID = 14L;
 
     /**
      * Field sdoTypeHandler.

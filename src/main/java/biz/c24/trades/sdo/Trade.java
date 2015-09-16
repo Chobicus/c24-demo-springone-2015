@@ -16,7 +16,7 @@ public class Trade extends biz.c24.io.api.data.IoSimpleDataObject {
     /**
      * Field serialVersionUID.
      */
-    private static final long serialVersionUID = 12L;
+    private static final long serialVersionUID = 14L;
 
     /**
      * Field sdoTypeHandler.
@@ -74,10 +74,10 @@ public class Trade extends biz.c24.io.api.data.IoSimpleDataObject {
     public java.math.BigDecimal getAmount1() {
         int index = getBufferOffset();
         // Skipping component 'ID'
-        index += sdoTypeHandler.skipInt(data, index);
+        index += sdoTypeHandler.skipLong(data, index);
 
         // Skipping component 'TradeDate'
-        index += sdoTypeHandler.skipDateTime(data, index, true, true);
+        index += sdoTypeHandler.skipISO8601Date(data, index);
 
         // Skipping component 'BuySell'
         index += sdoTypeHandler.skipString(data, index, BuySellCommonValues);
@@ -96,10 +96,10 @@ public class Trade extends biz.c24.io.api.data.IoSimpleDataObject {
     public java.math.BigDecimal getAmount2() {
         int index = getBufferOffset();
         // Skipping component 'ID'
-        index += sdoTypeHandler.skipInt(data, index);
+        index += sdoTypeHandler.skipLong(data, index);
 
         // Skipping component 'TradeDate'
-        index += sdoTypeHandler.skipDateTime(data, index, true, true);
+        index += sdoTypeHandler.skipISO8601Date(data, index);
 
         // Skipping component 'BuySell'
         index += sdoTypeHandler.skipString(data, index, BuySellCommonValues);
@@ -127,10 +127,10 @@ public class Trade extends biz.c24.io.api.data.IoSimpleDataObject {
     public java.lang.String getBuySell() {
         int index = getBufferOffset();
         // Skipping component 'ID'
-        index += sdoTypeHandler.skipInt(data, index);
+        index += sdoTypeHandler.skipLong(data, index);
 
         // Skipping component 'TradeDate'
-        index += sdoTypeHandler.skipDateTime(data, index, true, true);
+        index += sdoTypeHandler.skipISO8601Date(data, index);
 
         return sdoTypeHandler.readString(data ,index, BuySellCommonValues);
     }
@@ -151,10 +151,10 @@ public class Trade extends biz.c24.io.api.data.IoSimpleDataObject {
     public java.lang.String getCurrency1() {
         int index = getBufferOffset();
         // Skipping component 'ID'
-        index += sdoTypeHandler.skipInt(data, index);
+        index += sdoTypeHandler.skipLong(data, index);
 
         // Skipping component 'TradeDate'
-        index += sdoTypeHandler.skipDateTime(data, index, true, true);
+        index += sdoTypeHandler.skipISO8601Date(data, index);
 
         // Skipping component 'BuySell'
         index += sdoTypeHandler.skipString(data, index, BuySellCommonValues);
@@ -170,10 +170,10 @@ public class Trade extends biz.c24.io.api.data.IoSimpleDataObject {
     public java.lang.String getCurrency2() {
         int index = getBufferOffset();
         // Skipping component 'ID'
-        index += sdoTypeHandler.skipInt(data, index);
+        index += sdoTypeHandler.skipLong(data, index);
 
         // Skipping component 'TradeDate'
-        index += sdoTypeHandler.skipDateTime(data, index, true, true);
+        index += sdoTypeHandler.skipISO8601Date(data, index);
 
         // Skipping component 'BuySell'
         index += sdoTypeHandler.skipString(data, index, BuySellCommonValues);
@@ -198,10 +198,10 @@ public class Trade extends biz.c24.io.api.data.IoSimpleDataObject {
     public double getExchangeRate() {
         int index = getBufferOffset();
         // Skipping component 'ID'
-        index += sdoTypeHandler.skipInt(data, index);
+        index += sdoTypeHandler.skipLong(data, index);
 
         // Skipping component 'TradeDate'
-        index += sdoTypeHandler.skipDateTime(data, index, true, true);
+        index += sdoTypeHandler.skipISO8601Date(data, index);
 
         // Skipping component 'BuySell'
         index += sdoTypeHandler.skipString(data, index, BuySellCommonValues);
@@ -220,9 +220,9 @@ public class Trade extends biz.c24.io.api.data.IoSimpleDataObject {
      * 
      * @return The value.
      */
-    public int getID() {
+    public long getID() {
         int index = getBufferOffset();
-        return sdoTypeHandler.readInt(data ,index);
+        return sdoTypeHandler.readLong(data ,index);
     }
 
     /**
@@ -230,13 +230,13 @@ public class Trade extends biz.c24.io.api.data.IoSimpleDataObject {
      * 
      * @return The value.
      */
-    public synchronized java.time.LocalDateTime getSettlementDate() {
+    public java.time.LocalDate getSettlementDate() {
         int index = getBufferOffset();
         // Skipping component 'ID'
-        index += sdoTypeHandler.skipInt(data, index);
+        index += sdoTypeHandler.skipLong(data, index);
 
         // Skipping component 'TradeDate'
-        index += sdoTypeHandler.skipDateTime(data, index, true, true);
+        index += sdoTypeHandler.skipISO8601Date(data, index);
 
         // Skipping component 'BuySell'
         index += sdoTypeHandler.skipString(data, index, BuySellCommonValues);
@@ -256,7 +256,7 @@ public class Trade extends biz.c24.io.api.data.IoSimpleDataObject {
         // Skipping component 'Amount2'
         index += sdoTypeHandler.skipBigDecimal(data, index);
 
-        return java.time.LocalDateTime.ofInstant(sdoTypeHandler.readDateTime(data, index, true, true).getTime().toInstant(), java.time.ZoneId.systemDefault());
+        return biz.c24.io.api.data.Java8Utils.fromIOType(sdoTypeHandler.readISO8601Date(data, index));
     }
 
     /**
@@ -264,12 +264,12 @@ public class Trade extends biz.c24.io.api.data.IoSimpleDataObject {
      * 
      * @return The value.
      */
-    public synchronized java.time.LocalDateTime getTradeDate() {
+    public java.time.LocalDate getTradeDate() {
         int index = getBufferOffset();
         // Skipping component 'ID'
-        index += sdoTypeHandler.skipInt(data, index);
+        index += sdoTypeHandler.skipLong(data, index);
 
-        return java.time.LocalDateTime.ofInstant(sdoTypeHandler.readDateTime(data, index, true, true).getTime().toInstant(), java.time.ZoneId.systemDefault());
+        return biz.c24.io.api.data.Java8Utils.fromIOType(sdoTypeHandler.readISO8601Date(data, index));
     }
 
 }

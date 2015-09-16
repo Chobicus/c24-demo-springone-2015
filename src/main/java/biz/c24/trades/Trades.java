@@ -13,10 +13,8 @@ import java.util.Arrays;
 /**
  * trades. <p/>
  * 
- * This object is composed of the following <i>elements</i>:
+ * This object is composed of the following <i>element</i>:
  * <ul>
- * <li><b>Header</b> of type {@link biz.c24.trades.Header}
- * (0..1)</li>
  * <li><b>Trade</b> of type {@link biz.c24.trades.Trade}
  * (1..*)</li>
  * </ul>
@@ -24,24 +22,19 @@ import java.util.Arrays;
  * 
  * @author C24 Integration Objects;
  * @version $Revision$ $Date$
- * @see biz.c24.trades.TradesCls
+ * @see biz.c24.trades.TradesDataType
  */
 public class Trades extends biz.c24.io.api.data.ComplexDataObject {
 
     /**
      * Field serialVersionUID.
      */
-    private static final long serialVersionUID = 12L;
+    private static final long serialVersionUID = 14L;
 
     /**
      * Field NATIVE_ELEMENTS.
      */
-    private static final java.lang.String[] NATIVE_ELEMENTS = new String[] {"Header", "Trade"};
-
-    /**
-     * Field header.
-     */
-    private biz.c24.trades.Header header;
+    private static final java.lang.String[] NATIVE_ELEMENTS = new String[] {"Trade"};
 
     /**
      * Field trade.
@@ -49,7 +42,7 @@ public class Trades extends biz.c24.io.api.data.ComplexDataObject {
     private java.util.List<biz.c24.trades.Trade> trade;
 
     public Trades() {
-        this(biz.c24.trades.TradesCls.getInstance().getNullDefiningElementDecl());
+        this(biz.c24.trades.TradesDataType.getInstance().getNullDefiningElementDecl());
     }
 
     public Trades(biz.c24.io.api.data.Element definingElementDecl) {
@@ -79,9 +72,6 @@ public class Trades extends biz.c24.io.api.data.ComplexDataObject {
         switch (i)
         {
             case 0:
-                setHeader((biz.c24.trades.Header) value);
-                return;
-            case 1:
                 addTrade((biz.c24.trades.Trade) value);
                 return;
             default:
@@ -131,19 +121,7 @@ public class Trades extends biz.c24.io.api.data.ComplexDataObject {
      */
     protected void cloneDeep(biz.c24.io.api.data.ComplexDataObject clone) throws java.lang.CloneNotSupportedException {
         biz.c24.trades.Trades obj = (biz.c24.trades.Trades) clone;
-        obj.header = (biz.c24.trades.Header) biz.c24.io.api.Utils.cloneDeep(this.header, obj, "Header");
         obj.trade = (java.util.List<biz.c24.trades.Trade>) biz.c24.io.api.Utils.cloneDeep(this.trade, obj, "Trade");
-    }
-
-    /**
-     * Creates, adds and returns a new Header (0..1).
-     * 
-     * @return The new value.
-     */
-    public biz.c24.trades.Header createHeader() {
-        biz.c24.trades.Header obj = (biz.c24.trades.Header) getElementDecl("Header").createObject();
-        setHeader(obj);
-        return obj;
     }
 
     /**
@@ -179,8 +157,7 @@ public class Trades extends biz.c24.io.api.data.ComplexDataObject {
     /**
      * Returns the element called <code>name</code> at
      * <code>index</code>.<p>
-     * The legal value(s) for <code>name</code> are: <b>header,
-     * trade</b>.
+     * The legal value(s) for <code>name</code> are: <b>trade</b>.
      * 
      * @param name
      * @param index
@@ -195,8 +172,6 @@ public class Trades extends biz.c24.io.api.data.ComplexDataObject {
         switch (i)
         {
             case 0:
-                return getHeader();
-            case 1:
             if (this.trade == null)
                 throw new java.lang.IndexOutOfBoundsException();
             else
@@ -224,8 +199,6 @@ public class Trades extends biz.c24.io.api.data.ComplexDataObject {
         switch (i)
         {
             case 0:
-                return this.header == null ? 0 : 1;
-            case 1:
                 return this.trade == null ? 0 : this.trade.size();
             default:
                 return super.getElementCount(name);
@@ -251,8 +224,6 @@ public class Trades extends biz.c24.io.api.data.ComplexDataObject {
         switch (i)
         {
             case 0:
-                return this.header != null && this.header.equals(element) ? 0 : -1;
-            case 1:
                 return getTradeIndex((biz.c24.trades.Trade) element);
             default:
                 return super.getElementIndex(name, element);
@@ -260,19 +231,9 @@ public class Trades extends biz.c24.io.api.data.ComplexDataObject {
     }
 
     /**
-     * Gets the value of Header (0..1).
-     * 
-     * @return The value.
-     */
-    public biz.c24.trades.Header getHeader() {
-        return this.header;
-    }
-
-    /**
      * Returns the raw element data called <code>name</code> at
      * <code>index</code>.<p>
-     * The legal value(s) for <code>name</code> are: <b>header,
-     * trade</b>.
+     * The legal value(s) for <code>name</code> are: <b>trade</b>.
      * 
      * @param name
      * @param index
@@ -287,8 +248,6 @@ public class Trades extends biz.c24.io.api.data.ComplexDataObject {
         switch (i)
         {
             case 0:
-                return this.header;
-            case 1:
             if (this.trade == null)
                 throw new java.lang.IndexOutOfBoundsException();
             else
@@ -302,7 +261,6 @@ public class Trades extends biz.c24.io.api.data.ComplexDataObject {
      */
     public int getTotalElementCount() {
         int count = 0;
-        count += this.header == null ? 0 : 1;
         count += this.trade == null ? 0 : this.trade.size();
         return count;
     }
@@ -352,7 +310,6 @@ public class Trades extends biz.c24.io.api.data.ComplexDataObject {
         int result = 17;
         result = 31 * result + hashCodeOf(serialVersionUID);
         result = 31 * result + hashCodeOf(NATIVE_ELEMENTS);
-        result = 31 * result + hashCodeOf(header);
         result = 31 * result + hashCodeOf(trade);
         return result;
     }
@@ -372,9 +329,6 @@ public class Trades extends biz.c24.io.api.data.ComplexDataObject {
         switch (i)
         {
             case 0:
-                setHeader(null);
-                return;
-            case 1:
                 removeTrade(index);
                 return;
             default:
@@ -411,9 +365,6 @@ public class Trades extends biz.c24.io.api.data.ComplexDataObject {
         switch (i)
         {
             case 0:
-                setHeader((biz.c24.trades.Header) value);
-                return;
-            case 1:
                 if (value != null && value instanceof java.util.List) {
                     setTrade((java.util.List<biz.c24.trades.Trade>)value);
                 } else if (this.trade == null) {
@@ -428,18 +379,6 @@ public class Trades extends biz.c24.io.api.data.ComplexDataObject {
             default:
                 super.setElement(name, index, value);
         }
-    }
-
-    /**
-     * [Virtual Element] Sets the value of Header (0..1).
-     * 
-     * @param value
-     * @param value The new value.
-     */
-    public void setHeader(biz.c24.trades.Header value) {
-        this.header = value;
-        if (this.header != null)
-            ((biz.c24.io.api.data.ComplexDataObject) this.header).setParent(this, "Header");
     }
 
     /**
@@ -461,7 +400,6 @@ public class Trades extends biz.c24.io.api.data.ComplexDataObject {
      * @param out
      */
     private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
-        out.writeObject(this.header);
         out.writeObject(this.trade);
     }
 
@@ -471,7 +409,6 @@ public class Trades extends biz.c24.io.api.data.ComplexDataObject {
      * @param in
      */
     private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, java.lang.ClassNotFoundException {
-        this.header = (biz.c24.trades.Header) in.readObject();
         this.trade = (java.util.List<biz.c24.trades.Trade>) in.readObject();
     }
 
