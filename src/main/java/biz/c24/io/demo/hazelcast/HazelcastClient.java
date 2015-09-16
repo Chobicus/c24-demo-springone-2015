@@ -20,8 +20,8 @@ public class HazelcastClient<T> {
     private void initialise() {
         ClientConfig clientConfig = new ClientConfig();
         client = com.hazelcast.client.HazelcastClient.newHazelcastClient( clientConfig );
-        usdCurrencyMap = client.getMap("usdCache");
-        otherCurrenciesMap = client.getMap("otherCurrenciesCache");
+        usdCurrencyMap = client.getMap("usd");
+        otherCurrenciesMap = client.getMap("all");
     }
 
     public IMap<Integer, T> getUsdCurrencyMap() {
