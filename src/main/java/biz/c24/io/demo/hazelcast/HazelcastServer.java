@@ -21,7 +21,7 @@ public class HazelcastServer {
         Config config = new Config();
         HazelcastInstance hazelcastInstance = Hazelcast.newHazelcastInstance(config);
         IMap<Integer, Object> all = hazelcastInstance.getMap("all");
-        IMap<Integer, Object> usd = hazelcastInstance.getMap("all");
+        IMap<Integer, Object> usd = hazelcastInstance.getMap("usd");
         all.addIndex("BuySell", false);
 
 
