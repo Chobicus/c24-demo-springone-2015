@@ -85,6 +85,9 @@ public class QueryClient {
             if(operand.equalsIgnoreCase("and")) {
                 Predicate right = getPredicate(tokenizer.nextToken(), tokenizer.nextToken(), tokenizer.nextToken());
                 predicate = Predicates.and(left, right);
+            } else if (operand.equalsIgnoreCase("or")) {
+                Predicate right = getPredicate(tokenizer.nextToken(), tokenizer.nextToken(), tokenizer.nextToken());
+                predicate = Predicates.or(left, right);
             }
         } else {
             predicate = left;
@@ -104,7 +107,7 @@ public class QueryClient {
             return Predicates.greaterEqual(property, value);
         } else if(operator.equals("<=")) {
             return Predicates.lessEqual(property, value);
-        } 
+        }
         return null;
     }
 }
