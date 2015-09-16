@@ -50,7 +50,7 @@
     <job id="fileLoader">
         <step id="parseFile">
             <tasklet task-executor="fileLoadingPool" throttle-limit="8">
-                <chunk reader="ioItemReader" writer="tradeItemWriterGateway" commit-interval="100"/>
+                <chunk reader="ioItemReader" writer="tradeItemWriterGateway" commit-interval="1000"/>
             </tasklet>
         </step>
     </job>

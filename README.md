@@ -16,8 +16,6 @@ To build the project execute the following maven command from the project root d
 
 ``` mvn clean install ```
 
-# Start a Hazelcast Server with default config
-
 # Running the project as a standalone service with Spring Boot
 
 ``` mvn spring-boot:run ```

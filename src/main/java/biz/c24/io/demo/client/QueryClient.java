@@ -96,7 +96,15 @@ public class QueryClient {
 
         if (operator.equals("=")) {
             return Predicates.equal(property, value);
-        }
+        } else if(operator.equals(">")) {
+            return Predicates.greaterThan(property, value);
+        } else if(operator.equals("<")) {
+            return Predicates.lessThan(property, value);
+        } else if(operator.equals(">=")) {
+            return Predicates.greaterEqual(property, value);
+        } else if(operator.equals("<=")) {
+            return Predicates.lessEqual(property, value);
+        } 
         return null;
     }
 }

@@ -3,6 +3,7 @@ package biz.c24.io.demo.hazelcast;
 import com.hazelcast.config.Config;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.IMap;
 
 public class HazelcastServer {
 
@@ -19,6 +20,11 @@ public class HazelcastServer {
 
         Config config = new Config();
         HazelcastInstance hazelcastInstance = Hazelcast.newHazelcastInstance(config);
+        IMap<Integer, Object> all = hazelcastInstance.getMap("all");
+        IMap<Integer, Object> usd = hazelcastInstance.getMap("all");
+        all.addIndex("BuySell", false);
+
+
 
     }
 
