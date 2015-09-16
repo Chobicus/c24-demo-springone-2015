@@ -2,6 +2,7 @@
              xmlns:beans="http://www.springframework.org/schema/beans"
              xmlns:c24="http://schema.c24.biz/spring-core"
              xmlns:bat-c24="http://schema.c24.biz/spring-batch"
+             xmlns:task="http://www.springframework.org/schema/task"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="
          http://schema.c24.biz/spring-core
@@ -10,6 +11,8 @@
          http://schema.c24.biz/spring-batch-3.0.0.xsd
          http://www.springframework.org/schema/beans
          http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/task
+         http://www.springframework.org/schema/task/spring-task.xsd
          http://www.springframework.org/schema/batch
          http://www.springframework.org/schema/batch/spring-batch.xsd">
 
@@ -40,12 +43,14 @@
     <!-- File source to allow us to read from ZIP files -->
     <beans:bean id="zipFileSource" class="biz.c24.io.spring.batch.reader.source.ZipFileSource" scope="step" />
 
+    <task:executor id="fileLoadingPool" pool-size="8"/>
+
     <bat-c24:item-reader id="ioItemReader" model-ref="tradeModel" source-ref="zipFileSource" elementStartPattern=".*" validate="true" />
 
     <job id="fileLoader">
         <step id="parseFile">
-            <tasklet>
-                <chunk reader="ioItemReader" writer="tradeItemWriterGateway" commit-interval="1000"/>
+            <tasklet task-executor="fileLoadingPool" throttle-limit="8">
+                <chunk reader="ioItemReader" writer="tradeItemWriterGateway" commit-interval="100"/>
             </tasklet>
         </step>
     </job>
