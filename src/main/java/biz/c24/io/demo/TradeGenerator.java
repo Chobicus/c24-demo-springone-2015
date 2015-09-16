@@ -40,7 +40,7 @@ public class TradeGenerator {
 
 
     public static void main(String[] args) {
-        List<Trade> trades = createTrades(1_000_000);
+        List<Trade> trades = createTrades(100);
         writeToFile(trades);
     }
 

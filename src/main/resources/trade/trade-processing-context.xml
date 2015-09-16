@@ -46,7 +46,6 @@
     <int:router input-channel="trade-content-router-channel" expression="payload.getCurrency1()"
                 default-output-channel="hazelcast-all-others-channel" resolution-required="false">
         <int:mapping value="USD" channel="hazelcast-usd-channel"/>
-        <int:mapping value="GBP" channel="hazelcast-all-others-channel"/>
     </int:router>
 
     <int:service-activator input-channel="hazelcast-usd-channel" id="usdService" ref="cacheService" method="writeToUsdCache" output-channel="nullChannel"/>

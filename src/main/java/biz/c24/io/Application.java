@@ -1,5 +1,7 @@
 package biz.c24.io;
 
+import biz.c24.io.demo.hazelcast.HazelcastClient;
+import biz.c24.io.demo.hazelcast.HazelcastServer;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameter;
 import org.springframework.batch.core.JobParameters;
@@ -30,6 +32,7 @@ import java.util.Map;
 public class Application {
 
     public static void main(String[] args) throws Exception {
+        HazelcastServer server = new HazelcastServer();
         SpringApplication app = new SpringApplication(Application.class);
         app.setWebEnvironment(false);
         app.run(args);
