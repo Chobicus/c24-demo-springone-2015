@@ -1,0 +1,238 @@
+<?xml version="1.0" ?>
+<dataModel IOversion="3.1.0" encrypted="false" targetNamespace="http://www.c24.biz/trades" elementFormDefault="Qualified" attributeFormDefault="Unqualified" encoding="UTF-8" hibernateIDGeneratorMethodDefault="native" name="trades.dod" version="0.0.12">
+  <classification name="File">
+    <type>
+      <complexType specifyStructure="true" abstract="false" contentModel="Sequence" specialisation="Generic complex" excludeFromDatabase="false" processAsBatch="false" name="trades">
+        <element identifier="false" min="0" max="1" typeRef="Records/Header" name="Header"></element>
+        <element identifier="false" min="1" max="-1" typeRef="Records/Trade" name="Trade"></element>
+      </complexType>
+    </type>
+    <element identifier="false" min="1" max="1" typeRef="File/trades" name="trades"></element>
+  </classification>
+  <classification name="Records">
+    <type>
+      <complexType specifyStructure="true" abstract="false" contentModel="Sequence" specialisation="Generic complex" excludeFromDatabase="false" processAsBatch="false" name="Header">
+        <facet facetType="terminator">
+          <value>0d0a|0a|0d|00</value>
+        </facet>
+        <facet facetType="delimiter">
+          <value>Infix|true|2c!22</value>
+        </facet>
+        <facet facetType="format_type">
+          <value>Delimited</value>
+        </facet>
+        <element identifier="false" min="1" max="1" name="ID">
+          <type>
+            <atomicSimpleType baseType="#string" name="ID">
+              <facet facetType="min_length">
+                <value>0</value>
+              </facet>
+            </atomicSimpleType>
+          </type>
+        </element>
+        <element identifier="false" min="1" max="1" name="TradeDate">
+          <type>
+            <atomicSimpleType baseType="#date_date" name="TradeDate"></atomicSimpleType>
+          </type>
+        </element>
+        <element identifier="false" min="1" max="1" name="BuySell">
+          <type>
+            <atomicSimpleType baseType="#string" name="BuySell">
+              <facet facetType="min_length">
+                <value>0</value>
+              </facet>
+            </atomicSimpleType>
+          </type>
+        </element>
+        <element identifier="false" min="1" max="1" name="Currency1">
+          <type>
+            <atomicSimpleType baseType="#string" name="Currency1">
+              <facet facetType="min_length">
+                <value>0</value>
+              </facet>
+            </atomicSimpleType>
+          </type>
+        </element>
+        <element identifier="false" min="1" max="1" name="Amount1">
+          <type>
+            <atomicSimpleType baseType="#string" name="Amount1">
+              <facet facetType="min_length">
+                <value>0</value>
+              </facet>
+            </atomicSimpleType>
+          </type>
+        </element>
+        <element identifier="false" min="1" max="1" name="Exchange Rate">
+          <type>
+            <atomicSimpleType baseType="#string" name="Exchange Rate">
+              <facet facetType="min_length">
+                <value>0</value>
+              </facet>
+            </atomicSimpleType>
+          </type>
+        </element>
+        <element identifier="false" min="1" max="1" name="Currency2">
+          <type>
+            <atomicSimpleType baseType="#string" name="Currency2">
+              <facet facetType="min_length">
+                <value>0</value>
+              </facet>
+            </atomicSimpleType>
+          </type>
+        </element>
+        <element identifier="false" min="1" max="1" name="Amount2">
+          <type>
+            <atomicSimpleType baseType="#string" name="Amount2">
+              <facet facetType="min_length">
+                <value>0</value>
+              </facet>
+            </atomicSimpleType>
+          </type>
+        </element>
+        <element identifier="false" min="1" max="1" name="Settlment Date">
+          <type>
+            <atomicSimpleType baseType="#date_date" name="Settlment Date"></atomicSimpleType>
+          </type>
+        </element>
+        <element identifier="false" min="0" max="1" name="anyType">
+          <type>
+            <atomicSimpleType baseType="#string" name="anyType">
+              <facet facetType="min_length">
+                <value>0</value>
+              </facet>
+            </atomicSimpleType>
+          </type>
+        </element>
+      </complexType>
+    </type>
+    <type>
+      <complexType specifyStructure="true" abstract="false" contentModel="Sequence" specialisation="Generic complex" excludeFromDatabase="false" processAsBatch="false" name="Trade">
+        <facet facetType="terminator">
+          <value>0d0a|0a|0d|00</value>
+        </facet>
+        <facet facetType="delimiter">
+          <value>Infix|true|2c!22</value>
+        </facet>
+        <facet facetType="format_type">
+          <value>Delimited</value>
+        </facet>
+        <element identifier="false" min="1" max="1" name="ID">
+          <type>
+            <atomicSimpleType baseType="#number_int" name="ID">
+              <facet facetType="number_format">
+                <value>#;'-'#</value>
+              </facet>
+            </atomicSimpleType>
+          </type>
+        </element>
+        <element identifier="false" min="1" max="1" name="TradeDate">
+          <type>
+            <atomicSimpleType baseType="#date_generic" name="TradeDate">
+              <facet facetType="date_format">
+                <value>dd/MM/yyyy|false</value>
+              </facet>
+            </atomicSimpleType>
+          </type>
+        </element>
+        <element identifier="false" min="1" max="1" name="BuySell">
+          <commonValues>
+            <value>Buy</value>
+            <value>Sell</value>
+          </commonValues>
+          <type>
+            <atomicSimpleType baseType="#string" name="BuySell">
+              <facet facetType="min_length">
+                <value>0</value>
+              </facet>
+            </atomicSimpleType>
+          </type>
+        </element>
+        <element identifier="false" min="1" max="1" name="Currency1">
+          <commonValues>
+            <value>EUR</value>
+            <value>USD</value>
+            <value>GBP</value>
+            <value>AUD</value>
+            <value>CHF</value>
+            <value>JPY</value>
+          </commonValues>
+          <type>
+            <atomicSimpleType baseType="#string" name="Currency1">
+              <facet facetType="min_length">
+                <value>0</value>
+              </facet>
+            </atomicSimpleType>
+          </type>
+        </element>
+        <element identifier="false" min="1" max="1" name="Amount1">
+          <type>
+            <atomicSimpleType baseType="#number_decimal" name="Amount1">
+              <facet facetType="number_format">
+                <value>#0.00;'-'#0.00</value>
+              </facet>
+              <facet facetType="thousand_separator">
+                <value>2c</value>
+              </facet>
+              <facet facetType="decimal_separator">
+                <value>2e</value>
+              </facet>
+            </atomicSimpleType>
+          </type>
+        </element>
+        <element identifier="false" min="1" max="1" name="Exchange Rate">
+          <type>
+            <atomicSimpleType baseType="#number_double" name="Exchange Rate">
+              <facet facetType="number_format">
+                <value>#0.###;'-'#0.###</value>
+              </facet>
+              <facet facetType="decimal_separator">
+                <value>2e</value>
+              </facet>
+            </atomicSimpleType>
+          </type>
+        </element>
+        <element identifier="false" min="1" max="1" name="Currency2">
+          <commonValues>
+            <value>EUR</value>
+            <value>USD</value>
+            <value>GBP</value>
+            <value>AUD</value>
+            <value>CHF</value>
+            <value>JPY</value>
+          </commonValues>
+          <type>
+            <atomicSimpleType baseType="#string" name="Currency2">
+              <facet facetType="min_length">
+                <value>0</value>
+              </facet>
+            </atomicSimpleType>
+          </type>
+        </element>
+        <element identifier="false" min="1" max="1" name="Amount2">
+          <type>
+            <atomicSimpleType baseType="#number_decimal" name="Amount2">
+              <facet facetType="number_format">
+                <value>#0.00;'-'#0.00</value>
+              </facet>
+              <facet facetType="thousand_separator">
+                <value>2c</value>
+              </facet>
+              <facet facetType="decimal_separator">
+                <value>2e</value>
+              </facet>
+            </atomicSimpleType>
+          </type>
+        </element>
+        <element identifier="false" min="1" max="1" name="Settlement Date">
+          <type>
+            <atomicSimpleType baseType="#date_generic" name="Settlement Date">
+              <facet facetType="date_format">
+                <value>dd/MM/yyyy|false</value>
+              </facet>
+            </atomicSimpleType>
+          </type>
+        </element>
+      </complexType>
+    </type>
+  </classification>
+</dataModel>

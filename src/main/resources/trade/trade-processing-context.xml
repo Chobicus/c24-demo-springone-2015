@@ -1,0 +1,60 @@
+<beans:beans xmlns="http://www.springframework.org/schema/batch"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:int="http://www.springframework.org/schema/integration"
+             xmlns:int-hazelcast="http://www.springframework.org/schema/integration/hazelcast"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/integration
+         http://www.springframework.org/schema/integration/spring-integration.xsd
+         http://www.springframework.org/schema/integration/hazelcast
+	     http://www.springframework.org/schema/integration/hazelcast/spring-integration-hazelcast.xsd
+         http://www.springframework.org/schema/batch
+         http://www.springframework.org/schema/batch/spring-batch.xsd">
+
+    <!-- ======================================================================
+
+         Receives batches of biz.c24.trades
+
+         ====================================================================== -->
+
+    <!-- ################# START INTEGRATION FLOW COMPONENTS ################## -->
+
+    <!-- ======================================================================
+         1. Receive Batch trades from Spring Batch job
+         ====================================================================== -->
+    <int:gateway service-interface="org.springframework.batch.item.ItemWriter"
+                 id="tradeItemWriterGateway"
+                 default-request-timeout="100"
+                 default-request-channel="trade-item-writer-channel"/>
+
+    <!-- ======================================================================
+     2. split biz.c24.trades list in to single trades
+        split again into single trade item
+     ====================================================================== -->
+    <int:chain input-channel="trade-item-writer-channel" output-channel="trade-content-router-channel"
+               id="tradeSplitter">
+        <int:splitter/>
+        <int:splitter expression="payload.trade"/>
+        <int:transformer ref="sdoTransformer" method="transform"/>
+    </int:chain>
+
+    <!-- ======================================================================
+     3. Routing logic
+        Not defined yet so simple router sends all USD trades to a separate cache as an example
+     ====================================================================== -->
+    <int:router input-channel="trade-content-router-channel" expression="payload.getCurrency1()"
+                default-output-channel="hazelcast-all-others-channel" resolution-required="false">
+        <int:mapping value="USD" channel="hazelcast-usd-channel"/>
+        <int:mapping value="GBP" channel="hazelcast-all-others-channel"/>
+    </int:router>
+
+    <int:service-activator input-channel="hazelcast-usd-channel" id="usdService" ref="cacheService" method="writeToUsdCache" output-channel="nullChannel"/>
+
+    <int:service-activator input-channel="hazelcast-all-others-channel" id="otherCurrenciesService" ref="cacheService" method="writeToOtherCurrenciesCache" output-channel="nullChannel"/>
+
+    <int:channel id="hazelcast-usd-channel"/>
+    <int:channel id="hazelcast-all-others-channel"/>
+
+
+</beans:beans>

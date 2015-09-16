@@ -1,0 +1,100 @@
+<!--
+ | Copyright 2015 C24 Technologies.
+ |
+ | Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"),
+ | to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ | and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ |
+ | The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ |
+ | THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ | FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL C24 TECHNOLOGIES BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ | WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ | SOFTWARE.
+ |
+-->
+<beans xmlns:int="http://www.springframework.org/schema/integration"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:int-file="http://www.springframework.org/schema/integration/file"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="
+    http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+    http://www.springframework.org/schema/integration/file http://www.springframework.org/schema/integration/file/spring-integration-file.xsd
+    http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!-- ======================================================================
+
+         Inbound File Adapter looks for files that match the given regular expression
+         Any files that have already been processed with the same name within the same
+         JVM session will be ignored
+
+         ====================================================================== -->
+
+    <!-- ################# START INTEGRATION FLOW COMPONENTS ################## -->
+
+    <!-- ======================================================================
+         1. Poll for Inbound files
+         ====================================================================== -->
+    <int-file:inbound-channel-adapter directory="#{inboundReadDirectory.path}"
+                                      filename-regex="${inbound.filename.regex}"
+                                      prevent-duplicates="true"
+                                      channel="inbound-file-polling-channel"
+                                      id="inboundFileChannelAdaptor">
+        <int:poller ref="inboundFilePoller"/>
+    </int-file:inbound-channel-adapter>
+
+    <!-- ======================================================================
+     2. Convert to Job Launch Request and set input.file
+     ====================================================================== -->
+    <int:service-activator input-channel="inbound-file-polling-channel"
+                           output-channel="inbound-message-launcher-channel">
+        <bean class="org.springframework.batch.admin.integration.FileToJobLaunchRequestAdapter">
+            <property name="job" ref="fileLoader"/>
+        </bean>
+
+    </int:service-activator>
+
+    <!-- ======================================================================
+     3. Launch the Job
+     ====================================================================== -->
+    <int:service-activator ref="jobMessageLauncher" input-channel="inbound-message-launcher-channel"
+                           output-channel="logger">
+        <int:poller fixed-rate="500"/>
+    </int:service-activator>
+
+
+
+    <int:logging-channel-adapter id="logger" log-full-message="true" level="WARN"/>
+
+
+    <!-- ################# END INTEGRATION FLOW COMPONENTS ################# -->
+
+
+    <!-- ################# BEAN DEFINITIONS ################# -->
+
+    <!-- ====================================================================== -->
+    <!-- The Inbound Message Launch Channel -->
+    <!-- ====================================================================== -->
+    <int:channel id="inbound-message-launcher-channel">
+        <int:queue/>
+    </int:channel>
+
+    <!-- ====================================================================== -->
+    <!-- Thread pool used by the poller -->
+    <!-- ====================================================================== -->
+    <task:executor id="inboundPollerThreadPool" pool-size="${inbound.file.poller.thread.pool.size}"/>
+
+
+    <!-- ====================================================================== -->
+    <!-- File Poller -->
+    <!-- ====================================================================== -->
+    <int:poller id="inboundFilePoller" fixed-delay="${inbound.file.poller.fixed.delay}"
+                task-executor="inboundPollerThreadPool"
+                max-messages-per-poll="${inbound.file.poller.max.messages.per.poll}">
+    </int:poller>
+
+
+</beans>
