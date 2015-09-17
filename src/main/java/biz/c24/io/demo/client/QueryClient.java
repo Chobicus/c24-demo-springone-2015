@@ -1,8 +1,10 @@
 package biz.c24.io.demo.client;
 
 
+import biz.c24.io.api.C24;
 import biz.c24.io.api.data.DataType;
 import biz.c24.io.api.data.LocalDateDataType;
+import biz.c24.io.api.data.SimpleDataObject;
 import biz.c24.io.demo.hazelcast.HazelcastClient;
 import biz.c24.trades.sdo.Trade;
 import com.hazelcast.core.IMap;
@@ -10,7 +12,9 @@ import com.hazelcast.query.Predicate;
 import com.hazelcast.query.Predicates;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.time.LocalDate;
 import java.util.StringTokenizer;
 
@@ -74,6 +78,8 @@ public class QueryClient {
                     currentCache = hazelcastClient.getUsdCurrencyMap();
                 } else if (firstArg.equals("size")) {
                     querySize();
+                } else if (firstArg.equals("get")) {
+                    getItem(peek.nextToken());
                 } else {
                     queryCache(tokenizer);
                 }
@@ -82,6 +88,11 @@ public class QueryClient {
             }
         }
         System.exit(0);
+    }
+
+    private void getItem(String id) throws IOException {
+        C24.write(C24.toCdo(currentCache.get(Long.parseLong(id))), System.out);
+        System.out.print("\n>");
     }
 
     private void querySize() {
@@ -149,4 +160,5 @@ public class QueryClient {
         }
         return value;
     }
+
 }

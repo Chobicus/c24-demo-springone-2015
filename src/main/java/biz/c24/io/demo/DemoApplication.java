@@ -387,7 +387,7 @@ class TradeWritingMessageHandler implements MessageHandler {
         biz.c24.trades.sdo.Trade t = biz.c24.trades.sdo.Trade.class.cast(payload);
         this.tradesIMap.put(t.getID(), t);
         int currentCount = counter.incrementAndGet();
-        if (currentCount % 1000 == 0) {
+        if (currentCount % 10000 == 0) {
             log.info(String.format("Processed %,d messages", currentCount));
         }
     }
