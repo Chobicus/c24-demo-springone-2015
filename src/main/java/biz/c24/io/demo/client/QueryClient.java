@@ -58,6 +58,8 @@ public class QueryClient {
                 .append("> get <id>\n\n")
                 .append("e.g.\n")
                 .append("> get 100\n\n")
+                .append("5. Return the first n results by setting limit\n\n")
+                .append("> limit 10\n\n")
                 .append("-------------------------------------\n");
 
         System.out.print(sb.toString());
