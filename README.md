@@ -104,7 +104,7 @@ There is a class in biz.c24.io.demo.client called QueryClient that you can run t
 ## Query commands
 
 By default commands will be run against the "other" cache
-
+```
 > h  (show help)
 
 > usd (change to usd cache)
@@ -116,11 +116,12 @@ By default commands will be run against the "other" cache
 > <Attribute> <Operand> <value>  (Query predicates to run)
 
 > limit <number>  (number of found instances to return with the query result. limit 0 will turn off this feature)
-
+```
 ### Some examples
-
+```
 > BuySell = Buy
 
 > BuySell = Buy and Currency1 = GBP and Currency2 = USD
 
 > TradeDate > 2015-03-20 and SettlementDate < 2015-05-20
+```
