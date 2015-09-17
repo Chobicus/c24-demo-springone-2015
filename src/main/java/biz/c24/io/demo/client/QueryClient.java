@@ -2,18 +2,20 @@ package biz.c24.io.demo.client;
 
 
 import biz.c24.io.demo.hazelcast.HazelcastClient;
+import biz.c24.trades.sdo.Trade;
+import com.hazelcast.core.IMap;
 import com.hazelcast.query.Predicate;
 import com.hazelcast.query.Predicates;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.StringTokenizer;
 
 public class QueryClient {
 
     private HazelcastClient hazelcastClient;
+
+    private IMap<Long, Trade> currentCache;
 
     public static void main(String[] args) throws Exception {
         QueryClient client = new QueryClient();
@@ -23,6 +25,7 @@ public class QueryClient {
 
     public QueryClient() {
         hazelcastClient = new HazelcastClient();
+        currentCache = hazelcastClient.getOtherCurrenciesMap(); //default
     }
 
 
@@ -35,64 +38,64 @@ public class QueryClient {
                 new InputStreamReader(System.in));
         boolean done = false;
         while (!done) {
-            System.out.print("> ");
-            String line = in.readLine();
-            StringTokenizer tokenizer = new StringTokenizer(line);
-            String firstArg = tokenizer.nextToken();
-            if (firstArg.equals("q")) {
-                done = true;
-            } else if (firstArg.equals("other")) {
-                queryAllCache(tokenizer);
-            } else if (firstArg.equals("usd")) {
-                queryUsdCache(tokenizer);
+            try {
+                System.out.print("> ");
+                String line = in.readLine();
+                StringTokenizer peek = new StringTokenizer(line);
+                StringTokenizer tokenizer = new StringTokenizer(line);
+                String firstArg = peek.nextToken();
+                if (firstArg.equals("q")) {
+                    done = true;
+                } else if (firstArg.equals("other")) {
+                    currentCache = hazelcastClient.getOtherCurrenciesMap();
+                } else if (firstArg.equals("usd")) {
+                    currentCache = hazelcastClient.getUsdCurrencyMap();
+                } else if (firstArg.equals("size")) {
+                    querySize();
+                } else {
+                    queryCache(tokenizer);
+                }
+            } catch (Exception e) {
+                printHelp();
             }
         }
         System.exit(0);
     }
 
-    private void queryUsdCache(StringTokenizer tokenizer) {
-        String command = tokenizer.nextToken();
-        if (command.equals("size")) {
-            System.out.print(String.format("Cache Size %,d", hazelcastClient.getUsdCurrencyMap().size()));
-            System.out.println();
-        }
+    private void querySize() {
+        System.out.print(String.format("Cache Size %,d", currentCache.size()));
+        System.out.println();
     }
 
-    private void queryAllCache(StringTokenizer tokenizer) {
-        if(tokenizer.countTokens() == 1) {
-            String command = tokenizer.nextToken();
-            if (command.equals("size")) {
-                System.out.print(String.format("Cache Size %,d", hazelcastClient.getOtherCurrenciesMap().size()));
-                System.out.println();
-            } else {
+    private void queryCache(StringTokenizer tokenizer) {
+        if(tokenizer.countTokens() < 2) {
                 printHelp();
-            }
         } else {
-            buildAndExecutePredicates(tokenizer);
+            Predicate predicate = buildPredicates(tokenizer);
+            System.out.print(String.format("Result Size: %,d", currentCache.values(predicate).size()));
         }
     }
 
-    private void buildAndExecutePredicates(StringTokenizer tokenizer) {
-        Predicate left = null;
+    private Predicate buildPredicates(StringTokenizer tokenizer) {
         Predicate predicate = null;
-        if (tokenizer.countTokens() > 1) {
+        Predicate left = null;
+        while(tokenizer.hasMoreTokens()) {
             left = getPredicate(tokenizer.nextToken(), tokenizer.nextToken(), tokenizer.nextToken());
-        } else {
-            printHelp();
-        }
-        if(tokenizer.hasMoreTokens()) {
-            String operand = tokenizer.nextToken();
-            if(operand.equalsIgnoreCase("and")) {
-                Predicate right = getPredicate(tokenizer.nextToken(), tokenizer.nextToken(), tokenizer.nextToken());
-                predicate = Predicates.and(left, right);
-            } else if (operand.equalsIgnoreCase("or")) {
-                Predicate right = getPredicate(tokenizer.nextToken(), tokenizer.nextToken(), tokenizer.nextToken());
-                predicate = Predicates.or(left, right);
+            if(tokenizer.hasMoreTokens()) {
+                String operand = tokenizer.nextToken();
+                if(operand.equalsIgnoreCase("and")) {
+                    Predicate right = getPredicate(tokenizer.nextToken(), tokenizer.nextToken(), tokenizer.nextToken());
+                    predicate = Predicates.and(left, right);
+                } else if (operand.equalsIgnoreCase("or")) {
+                    Predicate right = getPredicate(tokenizer.nextToken(), tokenizer.nextToken(), tokenizer.nextToken());
+                    predicate = Predicates.or(left, right);
+                }
+            } else {
+                predicate = left;
             }
-        } else {
-            predicate = left;
         }
-        System.out.print(String.format("Result Size: %,d", hazelcastClient.getOtherCurrenciesMap().values(predicate).size()));
+        return predicate;
+
     }
 
     private Predicate getPredicate(String property, String operator, String value) {
