@@ -1,7 +1,7 @@
 package biz.c24.io.demo.client;
 
 
-import biz.c24.io.api.C24;
+import biz.c24.io.api.java8.C24;
 import biz.c24.io.api.data.DataType;
 import biz.c24.io.api.data.LocalDateDataType;
 import biz.c24.io.demo.hazelcast.HazelcastClient;
@@ -14,13 +14,17 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.StringTokenizer;
+import java.util.stream.Stream;
 
 public class QueryClient {
 
     private HazelcastClient hazelcastClient;
 
     private IMap<Long, Trade> currentCache;
+
+    private int limit = 0;
 
     public static void main(String[] args) throws Exception {
         QueryClient client = new QueryClient();
@@ -82,6 +86,8 @@ public class QueryClient {
                     querySize();
                 } else if (firstArg.equals("get")) {
                     getItem(peek.nextToken());
+                } else if (firstArg.equals("limit")) {
+                    limit = Integer.parseInt(peek.nextToken());
                 } else {
                     queryCache(tokenizer);
                 }
@@ -107,7 +113,16 @@ public class QueryClient {
                 printHelp();
         } else {
             Predicate predicate = buildPredicates(tokenizer);
-            System.out.print(String.format("Result Size: %,d", currentCache.values(predicate).size()));
+            Collection<Trade> result = currentCache.values(predicate);
+            System.out.println(String.format("Result Size: %,d",result.size() ));
+            result.stream().limit(limit).forEach(sdo -> {
+                try {
+                    C24.write(C24.toCdo(sdo), System.out);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+                ;
+            });
         }
     }
 
