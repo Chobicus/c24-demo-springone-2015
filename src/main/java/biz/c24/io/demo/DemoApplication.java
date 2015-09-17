@@ -99,9 +99,7 @@ public class DemoApplication {
 
     @Bean
     HazelcastInstance server() {
-        log.info(String.format("Running with max memory %s MB", Runtime.getRuntime().maxMemory() / (1024 * 1024)));
         log.info("starting Hazelcast instance..");
-
         Config config = new Config();
         return Hazelcast.newHazelcastInstance(config);
     }

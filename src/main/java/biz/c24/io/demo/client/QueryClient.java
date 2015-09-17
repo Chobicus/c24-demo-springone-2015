@@ -1,9 +1,9 @@
 package biz.c24.io.demo.client;
 
 
-import biz.c24.io.api.java8.C24;
 import biz.c24.io.api.data.DataType;
 import biz.c24.io.api.data.LocalDateDataType;
+import biz.c24.io.api.java8.C24;
 import biz.c24.io.demo.hazelcast.HazelcastClient;
 import biz.c24.trades.sdo.Trade;
 import com.hazelcast.core.IMap;
@@ -16,7 +16,6 @@ import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.StringTokenizer;
-import java.util.stream.Stream;
 
 public class QueryClient {
 
@@ -116,7 +115,7 @@ public class QueryClient {
         } else {
             Predicate predicate = buildPredicates(tokenizer);
             Collection<Trade> result = currentCache.values(predicate);
-            System.out.println(String.format("Result Size: %,d",result.size() ));
+            System.out.println(String.format("Result Size: %,d", result.size()));
             result.stream().limit(limit).forEach(sdo -> {
                 try {
                     C24.write(C24.toCdo(sdo), System.out);
