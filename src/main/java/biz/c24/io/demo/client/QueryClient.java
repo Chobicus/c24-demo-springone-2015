@@ -1,6 +1,8 @@
 package biz.c24.io.demo.client;
 
 
+import biz.c24.io.api.data.DataType;
+import biz.c24.io.api.data.LocalDateDataType;
 import biz.c24.io.demo.hazelcast.HazelcastClient;
 import biz.c24.trades.sdo.Trade;
 import com.hazelcast.core.IMap;
@@ -9,6 +11,7 @@ import com.hazelcast.query.Predicates;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.time.LocalDate;
 import java.util.StringTokenizer;
 
 public class QueryClient {
@@ -118,17 +121,28 @@ public class QueryClient {
     }
 
     private Predicate getPredicate(String property, String operator, String value) {
+        Comparable queryValue = convertValue(property, value);
         if (operator.equals("=")) {
-            return Predicates.equal(property, value);
+            return Predicates.equal(property, queryValue);
         } else if(operator.equals(">")) {
-            return Predicates.greaterThan(property, value);
+            return Predicates.greaterThan(property, queryValue);
         } else if(operator.equals("<")) {
-            return Predicates.lessThan(property, value);
+            return Predicates.lessThan(property, queryValue);
         } else if(operator.equals(">=")) {
-            return Predicates.greaterEqual(property, value);
+            return Predicates.greaterEqual(property, queryValue);
         } else if(operator.equals("<=")) {
-            return Predicates.lessEqual(property, value);
+            return Predicates.lessEqual(property, queryValue);
         }
         return null;
+    }
+
+    private Comparable convertValue(String property, String value) {
+
+        biz.c24.trades.Trade trade = new biz.c24.trades.Trade();
+        DataType dataType = trade.getElementDecl(property).getType();
+        if(dataType instanceof LocalDateDataType) {
+            return LocalDate.parse(value);
+        }
+        return value;
     }
 }
