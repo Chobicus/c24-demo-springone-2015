@@ -30,7 +30,24 @@ public class QueryClient {
 
 
     private static void printHelp() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("---------- Query Client Help -------------\n")
+                .append("Default cache is \"other\"\n\n")
+                .append("1. Change cache\n")
+                .append("> usd\n")
+                .append("> other\n\n")
+                .append("2. Get size of current cache\n")
+                .append("> size\n\n")
+                .append("3. Execute queries\n")
+                .append("<Attribute name> <Operand> <Value>\n\n")
+                .append("e.g.\n")
+                .append("BuySell = Buy\n\n")
+                .append("Can also combine predicates with and|or\n\n")
+                .append("e.g.\n")
+                .append("BuySell = Buy and Currency1 = GBP and Currency2 = USD\n\n")
+                .append("-------------------------------------\n");
 
+        System.out.print(sb.toString());
     }
 
     private void doConsole() throws Exception {
@@ -44,8 +61,10 @@ public class QueryClient {
                 StringTokenizer peek = new StringTokenizer(line);
                 StringTokenizer tokenizer = new StringTokenizer(line);
                 String firstArg = peek.nextToken();
-                if (firstArg.equals("q")) {
+                if (firstArg.equalsIgnoreCase("q")) {
                     done = true;
+                } else if (firstArg.equalsIgnoreCase("h")) {
+                    printHelp();
                 } else if (firstArg.equals("other")) {
                     currentCache = hazelcastClient.getOtherCurrenciesMap();
                 } else if (firstArg.equals("usd")) {
@@ -99,7 +118,6 @@ public class QueryClient {
     }
 
     private Predicate getPredicate(String property, String operator, String value) {
-
         if (operator.equals("=")) {
             return Predicates.equal(property, value);
         } else if(operator.equals(">")) {
