@@ -2,14 +2,13 @@ package biz.c24.io.demo;
 
 
 import biz.c24.io.api.C24;
-import biz.c24.io.api.presentation.TextualSink;
 import biz.c24.trades.Trade;
-import biz.c24.trades.Trades;
 
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;

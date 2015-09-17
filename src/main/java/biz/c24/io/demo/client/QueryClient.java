@@ -41,7 +41,7 @@ public class QueryClient {
             String firstArg = tokenizer.nextToken();
             if (firstArg.equals("q")) {
                 done = true;
-            } else if (firstArg.equals("all")) {
+            } else if (firstArg.equals("other")) {
                 queryAllCache(tokenizer);
             } else if (firstArg.equals("usd")) {
                 queryUsdCache(tokenizer);

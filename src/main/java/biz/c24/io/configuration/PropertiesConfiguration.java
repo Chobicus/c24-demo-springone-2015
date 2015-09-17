@@ -22,7 +22,7 @@ public class PropertiesConfiguration {
     /**
      * Load all default properties from this location
      */
-    private final static String PROPERTY_PATH = "properties/application.properties";
+    private final static String PROPERTY_PATH = "application.properties";
 
     /**
      * Load properties from an external file. Any properties defined here will override any already defined in the main property path

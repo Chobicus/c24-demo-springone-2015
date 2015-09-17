@@ -5,7 +5,7 @@ import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
 import org.springframework.stereotype.Component;
 
-@Component
+
 public class HazelcastClient<T> {
 
     private HazelcastInstance client;
@@ -21,7 +21,7 @@ public class HazelcastClient<T> {
         ClientConfig clientConfig = new ClientConfig();
         client = com.hazelcast.client.HazelcastClient.newHazelcastClient( clientConfig );
         usdCurrencyMap = client.getMap("usd");
-        otherCurrenciesMap = client.getMap("all");
+        otherCurrenciesMap = client.getMap("other");
     }
 
     public IMap<Integer, T> getUsdCurrencyMap() {
