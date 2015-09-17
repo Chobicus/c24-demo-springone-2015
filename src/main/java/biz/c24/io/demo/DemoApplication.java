@@ -137,28 +137,28 @@ class IntegrationConfiguration {
 
     @Bean
     public MessageChannel logger() {
-        return MessageChannels.queue().get();
+        return MessageChannels.direct().get();
     }
 
     @Bean(name = DemoApplication.TRADE_ITEM_WRITER_CHANNEL)
     public MessageChannel tradeItemWriterChannel() {
-        return MessageChannels.queue().get();
+        return MessageChannels.direct().get();
     }
 
     @Bean
     public MessageChannel tradeContentRouterChannel() {
-        return MessageChannels.queue().get();
+        return MessageChannels.direct().get();
     }
 
     @Bean(name = DemoApplication.HAZELCAST_ALL_OTHERS_CHANNEL)
     public MessageChannel hazelcastAllOthersChannel() {
-        return MessageChannels.queue().get();
+        return MessageChannels.direct().get();
     }
 
 
     @Bean(name = DemoApplication.HAZELCAST_USD_CHANNEL)
     public MessageChannel hazelcastUsdChannel() {
-        return MessageChannels.queue().get();
+        return MessageChannels.direct().get();
     }
 
     /// read files into batch job
@@ -255,7 +255,9 @@ class TradeParserBatchJobConfiguration {
                 .reader(reader)
                 .writer(writer)
                 .throttleLimit(8)
+                .taskExecutor(taskExecutor(8))
                 .build();
+
     }
 
     @Bean
@@ -355,7 +357,7 @@ class HazelcastIntegration {
             @Qualifier(DemoApplication.HAZELCAST_USD_CHANNEL) MessageChannel usd,
             HazelcastInstance instance) {
         return IntegrationFlows.from(usd)
-                .handle(new TradeWritingMessageHandler(instance.getMap("usd")))
+                .handle(new TradeWritingMessageHandler(instance.getMap("usd"), "USD"))
                 .get();
     }
 
@@ -364,7 +366,7 @@ class HazelcastIntegration {
             @Qualifier(DemoApplication.HAZELCAST_ALL_OTHERS_CHANNEL) MessageChannel others,
             HazelcastInstance instance) {
         return IntegrationFlows.from(others)
-                .handle(new TradeWritingMessageHandler(instance.getMap("other")))
+                .handle(new TradeWritingMessageHandler(instance.getMap("other"), "Others"))
                 .get();
     }
 }
@@ -374,9 +376,11 @@ class TradeWritingMessageHandler implements MessageHandler {
     private AtomicInteger counter = new AtomicInteger();
     private Log log = LogFactory.getLog(getClass());
     private IMap<Long, biz.c24.trades.sdo.Trade> tradesIMap;
+    private final String name;
 
-    public TradeWritingMessageHandler(IMap<Long, biz.c24.trades.sdo.Trade> tradesIMap) {
+    public TradeWritingMessageHandler(IMap<Long, biz.c24.trades.sdo.Trade> tradesIMap, String name) {
         this.tradesIMap = tradesIMap;
+        this.name = name;
     }
 
     @Override
@@ -386,7 +390,7 @@ class TradeWritingMessageHandler implements MessageHandler {
         this.tradesIMap.put(t.getID(), t);
         int currentCount = counter.incrementAndGet();
         if (currentCount % 10000 == 0) {
-            log.info(String.format("Processed %,d messages", currentCount));
+            log.info(String.format("%s: Processed %,d messages", name, currentCount));
         }
     }
 }
