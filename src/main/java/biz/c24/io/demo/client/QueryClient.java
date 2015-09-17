@@ -78,7 +78,7 @@ public class QueryClient {
                     queryCache(tokenizer);
                 }
             } catch (Exception e) {
-                printHelp();
+                System.out.print("\n>");
             }
         }
         System.exit(0);
@@ -102,7 +102,11 @@ public class QueryClient {
         Predicate predicate = null;
         Predicate left = null;
         while(tokenizer.hasMoreTokens()) {
-            left = getPredicate(tokenizer.nextToken(), tokenizer.nextToken(), tokenizer.nextToken());
+            if(predicate != null) {
+                left = predicate;
+            } else {
+                left = getPredicate(tokenizer.nextToken(), tokenizer.nextToken(), tokenizer.nextToken());
+            }
             if(tokenizer.hasMoreTokens()) {
                 String operand = tokenizer.nextToken();
                 if(operand.equalsIgnoreCase("and")) {
