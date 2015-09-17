@@ -36,11 +36,27 @@ These are named "usd" and "other"
          IMap<Long, Object> usd = hazelcastInstance.getMap("usd");
 ```
 
-A File poller polls for files ending in .zip in the inbound/read directory
+A File poller polls for files ending in .zip containing trades in the inbound/read directory
 
 When a file is discovered it is ingested and passed to a Spring Batch job
 
 The Spring Batch job parses the file and creates instances of biz.c24.trades.Trades
+
+A configured C24ItemReader performs the task of parsing
+
+```
+    public C24ItemReader ioItemReader(ZipFileSource zipFileSource, C24Model tradeModel) {
+        C24ItemReader c24ItemReader = new C24ItemReader();
+        c24ItemReader.setSource(zipFileSource);
+        c24ItemReader.setElementStartPattern(".*");
+        c24ItemReader.setModel(tradeModel);
+        c24ItemReader.setValidate(true);
+        return c24ItemReader;
+    }
+```
+Batches of parsed object instances are then channeled to a Spring Integration flow for processing
+
+The SI flow splits the objects into single biz.c24.trades.trade objects
 
 
 
