@@ -4,7 +4,6 @@ package biz.c24.io.demo.client;
 import biz.c24.io.api.C24;
 import biz.c24.io.api.data.DataType;
 import biz.c24.io.api.data.LocalDateDataType;
-import biz.c24.io.api.data.SimpleDataObject;
 import biz.c24.io.demo.hazelcast.HazelcastClient;
 import biz.c24.trades.sdo.Trade;
 import com.hazelcast.core.IMap;
@@ -14,7 +13,6 @@ import com.hazelcast.query.Predicates;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.time.LocalDate;
 import java.util.StringTokenizer;
 
@@ -52,6 +50,10 @@ public class QueryClient {
                 .append("Can also combine predicates with and|or\n\n")
                 .append("e.g.\n")
                 .append("BuySell = Buy and Currency1 = GBP and Currency2 = USD\n\n")
+                .append("4. Get a single object from the cache by Id\n\n")
+                .append("> get <id>\n\n")
+                .append("e.g.\n")
+                .append("> get 100\n\n")
                 .append("-------------------------------------\n");
 
         System.out.print(sb.toString());
