@@ -27,19 +27,22 @@ public class TradeGenerator {
         currencyRates = new HashMap<>(7);
 
         currencyRates.put("GBP", 1.0);
-        currencyRates.put("EUR", 1.2521);
-        currencyRates.put("USD", 1.6818);
-        currencyRates.put("AUD", 1.8061);
-        currencyRates.put("CHF", 1.5240);
-        currencyRates.put("JPY", 172.54);
-        currencyRates.put("CAD", 1.8362);
+        currencyRates.put("EUR", 1.37220);
+        currencyRates.put("USD", 1.55370);
+        currencyRates.put("AUD", 2.17180);
+        currencyRates.put("CHF", 1.50470);
+        currencyRates.put("JPY", 187.835);
+        currencyRates.put("CAD", 2.04900);
+        currencyRates.put("NOK", 12.6315);
+        currencyRates.put("ILS", 6.03770);
+        currencyRates.put("RUR", 102.240);
     }
 
     private static LongAdder adder = new LongAdder();
 
 
     public static void main(String[] args) {
-        List<Trade> trades = createTrades(1_000_000);
+        List<Trade> trades = createTrades(100);
         writeToFile(trades);
     }
 
@@ -72,9 +75,7 @@ public class TradeGenerator {
     }
 
     private static List<Trade> createTrades(int numTrades) {
-        final Stream<Trade> tradeStream = Stream.generate(() -> {
-            return createRandomTrade();
-        });
+        final Stream<Trade> tradeStream = Stream.generate(() -> createRandomTrade());
 
         System.out.print(String.format("Creating %,d trades...", numTrades));
 
@@ -89,7 +90,7 @@ public class TradeGenerator {
 
 
     public static Trade createRandomTrade() {
-        Trade trade = new biz.c24.trades.Trade();
+        Trade trade = new Trade();
         Random randomGen = new Random();
 
         // Try out the new Java 8 Longadder
@@ -97,7 +98,7 @@ public class TradeGenerator {
         trade.setID(adder.longValue());
 
         // Now we want a random weekday in August
-        LocalDate startingDate = LocalDate.of(2014, Month.AUGUST, 1);
+        LocalDate startingDate = LocalDate.of(2015, Month.AUGUST, 1);
         LocalDate tradeDate;
         do {
             tradeDate = startingDate.plusDays(randomGen.nextInt(startingDate.lengthOfMonth()-1));    // Add a random number of days
@@ -109,7 +110,8 @@ public class TradeGenerator {
         trade.setBuySell(randomGen.nextBoolean() ? temp.substring(0,3) : temp.substring(3,7));
 
         // Get an array of currencyRates from the Map
-        String[] currencyArray = currencyRates.keySet().toArray(new String[0]);
+        Set<String> strings = currencyRates.keySet();
+        String[] currencyArray = strings.toArray(new String[strings.size()]);
 
         // Pick one of the currencyRates by random
         trade.setCurrency1(currencyArray[randomGen.nextInt(currencyArray.length)].substring(0,3));
