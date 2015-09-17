@@ -1,4 +1,4 @@
-package biz.c24.io.demo;
+package biz.c24.io.demo.utils;
 
 
 import biz.c24.io.api.C24;
