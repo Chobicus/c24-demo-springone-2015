@@ -126,6 +126,12 @@ By default commands will be run against the "other" cache
 > TradeDate > 2015-03-20 and SettlementDate < 2015-05-20
 ```
 
+The client application can be run in a separate console window using
+
+``` mvn exec:java -Dexec.mainClass="biz.c24.io.demo.client.QueryClient" ```
+
+Once it is running you can use the above commands to query the cache
+
 # Links
 
 * [C24 IO] (http://c24tech.com)
