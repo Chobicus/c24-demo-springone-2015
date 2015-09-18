@@ -24,7 +24,7 @@ public class TradeGenerator {
     private static Map<String, Double> currencyRates = null;
 
     static {
-        currencyRates = new HashMap<>(7);
+        currencyRates = new HashMap<>(10);
 
         currencyRates.put("GBP", 1.0);
         currencyRates.put("EUR", 1.37220);
@@ -42,7 +42,7 @@ public class TradeGenerator {
 
 
     public static void main(String[] args) {
-        List<Trade> trades = createTrades(100);
+        List<Trade> trades = createTrades(1_000_000);
         writeToFile(trades);
     }
 

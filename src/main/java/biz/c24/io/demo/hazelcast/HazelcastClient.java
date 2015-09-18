@@ -5,7 +5,11 @@ import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
 import org.springframework.stereotype.Component;
 
-
+/**
+ * Hazelcast client with default config
+ *
+ * @param <T>
+ */
 public class HazelcastClient<T> {
 
     private HazelcastInstance client;

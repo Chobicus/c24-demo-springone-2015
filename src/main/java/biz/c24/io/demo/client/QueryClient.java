@@ -17,6 +17,9 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.StringTokenizer;
 
+/**
+ * Simple client for querying Hazelcast
+ */
 public class QueryClient {
 
     private HazelcastClient hazelcastClient;
@@ -40,25 +43,25 @@ public class QueryClient {
     private static void printHelp() {
         StringBuilder sb = new StringBuilder();
         sb.append("---------- Query Client Help -------------\n")
-                .append("Default cache is \"other\"\n\n")
+                .append("Default cache is \"other\"\n")
                 .append("1. Change cache\n")
                 .append("> usd\n")
-                .append("> other\n\n")
+                .append("> other\n")
                 .append("2. Get size of current cache\n")
-                .append("> size\n\n")
+                .append("> size\n")
                 .append("3. Execute queries\n")
-                .append("<Attribute name> <Operand> <Value>\n\n")
+                .append("<Attribute name> <Operand> <Value>\n")
                 .append("e.g.\n")
                 .append("BuySell = Buy\n\n")
-                .append("Can also combine predicates with and|or\n\n")
+                .append("Can also combine predicates with and|or\n")
                 .append("e.g.\n")
-                .append("BuySell = Buy and Currency1 = GBP and Currency2 = USD\n\n")
-                .append("4. Get a single object from the cache by Id\n\n")
-                .append("> get <id>\n\n")
+                .append("BuySell = Buy and Currency1 = GBP and Currency2 = USD\n")
+                .append("4. Get a single object from the cache by Id\n")
+                .append("> get <id>\n")
                 .append("e.g.\n")
                 .append("> get 100\n\n")
-                .append("5. Return the first n results by setting limit\n\n")
-                .append("> limit 10\n\n")
+                .append("5. Return the first n results by setting limit\n")
+                .append("> limit 10\n")
                 .append("-------------------------------------\n");
 
         System.out.print(sb.toString());
@@ -73,7 +76,6 @@ public class QueryClient {
                 System.out.print("> ");
                 String line = in.readLine();
                 StringTokenizer peek = new StringTokenizer(line);
-                StringTokenizer tokenizer = new StringTokenizer(line);
                 String firstArg = peek.nextToken();
                 if (firstArg.equalsIgnoreCase("q")) {
                     done = true;
@@ -90,7 +92,7 @@ public class QueryClient {
                 } else if (firstArg.equals("limit")) {
                     limit = Integer.parseInt(peek.nextToken());
                 } else {
-                    queryCache(tokenizer);
+                    queryCache(new StringTokenizer(line));
                 }
             } catch (Exception e) {
                 System.out.print("\n>");
@@ -129,7 +131,7 @@ public class QueryClient {
 
     private Predicate buildPredicates(StringTokenizer tokenizer) {
         Predicate predicate = null;
-        Predicate left = null;
+        Predicate left;
         while(tokenizer.hasMoreTokens()) {
             if(predicate != null) {
                 left = predicate;

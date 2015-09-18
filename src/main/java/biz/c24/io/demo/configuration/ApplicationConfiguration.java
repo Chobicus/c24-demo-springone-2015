@@ -1,6 +1,5 @@
 package biz.c24.io.demo.configuration;
 
-import biz.c24.io.demo.DemoApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.dsl.channel.MessageChannels;
@@ -8,6 +7,10 @@ import org.springframework.integration.dsl.core.Pollers;
 import org.springframework.integration.scheduling.PollerMetadata;
 import org.springframework.messaging.MessageChannel;
 
+/**
+ * Global Bean Configurations
+ *
+ */
 @Configuration
 public class ApplicationConfiguration {
 

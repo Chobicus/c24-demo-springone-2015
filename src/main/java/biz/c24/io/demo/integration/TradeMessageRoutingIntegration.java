@@ -1,4 +1,4 @@
-package biz.c24.io.demo;
+package biz.c24.io.demo.integration;
 
 import biz.c24.io.api.C24;
 import biz.c24.io.demo.configuration.ApplicationConfiguration;
@@ -28,7 +28,7 @@ import java.util.Collections;
  * @author Josh Long
  */
 @Configuration
-public class HazelcastIntegration {
+public class TradeMessageRoutingIntegration {
 
     @Bean
     public IntegrationFlow tradeWrites(

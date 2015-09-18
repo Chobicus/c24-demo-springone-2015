@@ -1,4 +1,4 @@
-package biz.c24.io.demo;
+package biz.c24.io.demo.integration;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
@@ -33,7 +33,7 @@ import java.util.Arrays;
  * @author Josh Long
  */
 @Configuration
-class IntegrationConfiguration {
+class InboundFilePollingIntegration {
 
 
     private File inboundReadDirectory, inboundProcessedDirectory, inboundFailedDirectory;

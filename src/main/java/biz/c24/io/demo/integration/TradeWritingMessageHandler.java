@@ -1,4 +1,4 @@
-package biz.c24.io.demo;
+package biz.c24.io.demo.integration;
 
 import biz.c24.trades.sdo.Trade;
 import com.hazelcast.core.IMap;
