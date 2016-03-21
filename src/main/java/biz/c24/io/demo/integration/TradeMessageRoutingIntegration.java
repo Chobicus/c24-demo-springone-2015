@@ -40,7 +40,7 @@ public class TradeMessageRoutingIntegration {
                 .split("payload.trade", (org.springframework.integration.dsl.support.Consumer<SplitterEndpointSpec<ExpressionEvaluatingSplitter>>) null)
                 .transform((Trade trade) -> { // regular trade to SDO trade
                     try {
-                        biz.c24.trades.sdo.Trade sdoTrade = C24.toSdo(trade);
+                        biz.c24.trades.preon.Trade sdoTrade = C24.toPreon(trade);
                         return sdoTrade;
                     } catch (IOException e) {
                         throw new RuntimeException("Trade could not be transformed to SDO", e);
@@ -49,7 +49,7 @@ public class TradeMessageRoutingIntegration {
                 .route(new AbstractMessageRouter() {
                     @Override
                     protected Collection<MessageChannel> determineTargetChannels(Message<?> message) {
-                        biz.c24.trades.sdo.Trade cast = biz.c24.trades.sdo.Trade.class.cast(message.getPayload());
+                        biz.c24.trades.preon.Trade cast = biz.c24.trades.preon.Trade.class.cast(message.getPayload());
                         return Collections.singletonList(cast.getCurrency1().equalsIgnoreCase("USD") ? usd : others);
                     }
                 })

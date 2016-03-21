@@ -39,10 +39,10 @@
         <project.build.modelDirectory>${project.basedir}/src/main/c24</project.build.modelDirectory>
         <project.build.generateDirectory>${project.build.directory}/generated-sources</project.build.generateDirectory>
 
-        <c24.io.api.version>4.7.9</c24.io.api.version>
-        <c24.io.studio.version>4.7.7</c24.io.studio.version>
-        <c24.io.maven.version>4.7.1</c24.io.maven.version>
-        <c24.io.spring.version>3.0.7</c24.io.spring.version>
+        <c24.io.api.version>4.8.0</c24.io.api.version>
+        <c24.io.studio.version>4.8.0</c24.io.studio.version>
+        <c24.io.maven.version>4.8.0</c24.io.maven.version>
+        <c24.io.spring.version>3.0.9</c24.io.spring.version>
 
         <hazelcast.version>3.5.1</hazelcast.version>
 
@@ -146,6 +146,8 @@
             <groupId>org.springframework.batch</groupId>
             <artifactId>spring-batch-integration</artifactId>
         </dependency>
+
+
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

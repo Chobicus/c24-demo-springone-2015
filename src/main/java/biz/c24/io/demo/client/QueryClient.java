@@ -5,7 +5,7 @@ import biz.c24.io.api.data.DataType;
 import biz.c24.io.api.data.LocalDateDataType;
 import biz.c24.io.api.java8.C24;
 import biz.c24.io.demo.hazelcast.HazelcastClient;
-import biz.c24.trades.sdo.Trade;
+import biz.c24.trades.preon.Trade;
 import com.hazelcast.core.IMap;
 import com.hazelcast.query.Predicate;
 import com.hazelcast.query.Predicates;

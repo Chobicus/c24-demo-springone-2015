@@ -1,6 +1,6 @@
 package biz.c24.io.demo.integration;
 
-import biz.c24.trades.sdo.Trade;
+import biz.c24.trades.preon.Trade;
 import com.hazelcast.core.IMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -24,7 +24,7 @@ public class TradeWritingMessageHandler implements MessageHandler {
     private IMap<Long, Trade> cache;
     private final String cacheName;
 
-    public TradeWritingMessageHandler(IMap<Long, biz.c24.trades.sdo.Trade> tradesIMap, String name) {
+    public TradeWritingMessageHandler(IMap<Long, biz.c24.trades.preon.Trade> tradesIMap, String name) {
         this.cache = tradesIMap;
         this.cacheName = name;
     }
@@ -32,7 +32,7 @@ public class TradeWritingMessageHandler implements MessageHandler {
     @Override
     public void handleMessage(Message<?> message) throws MessagingException {
         Object payload = message.getPayload();
-        biz.c24.trades.sdo.Trade t = biz.c24.trades.sdo.Trade.class.cast(payload);
+        biz.c24.trades.preon.Trade t = biz.c24.trades.preon.Trade.class.cast(payload);
         this.cache.put(t.getID(), t);
         int currentCount = counter.incrementAndGet();
         if (currentCount % 10000 == 0) {

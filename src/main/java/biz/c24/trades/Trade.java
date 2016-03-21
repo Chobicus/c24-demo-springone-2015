@@ -33,7 +33,9 @@ import java.util.Arrays;
  * @version $Revision$ $Date$
  * @see biz.c24.trades.TradeDataType
  */
-public class Trade extends biz.c24.io.api.data.ComplexDataObject {
+public class Trade extends biz.c24.io.api.data.ComplexDataObject 
+implements biz.c24.io.api.data.preon.util.PreonConvertible
+{
 
     /**
      * Field serialVersionUID.
@@ -208,8 +210,8 @@ public class Trade extends biz.c24.io.api.data.ComplexDataObject {
      * 
      * @param buffer
      */
-    public biz.c24.io.api.data.SimpleDataObject createSDO(byte[] buffer) {
-        return new biz.c24.trades.sdo.Trade(buffer, 0);
+    public biz.c24.io.api.data.preon.PreonDataObject createPREON(byte[] buffer) {
+        return new biz.c24.trades.preon.Trade(buffer, 0);
     }
 
     public boolean equals(java.lang.Object obj) {
@@ -406,6 +408,18 @@ public class Trade extends biz.c24.io.api.data.ComplexDataObject {
      */
     public long getID() {
         return this.iD;
+    }
+
+    /**
+     */
+    public Class<? extends biz.c24.trades.preon.Trade> getPreonClass() {
+        return biz.c24.trades.preon.Trade.class;
+    }
+
+    /**
+     */
+    public biz.c24.io.api.preon.typeHandler.PreonTypeHandler2 getPreonTypeHandler() {
+        return biz.c24.trades.preon.Trade.getPreonTypeHandler();
     }
 
     /**
@@ -701,6 +715,258 @@ public class Trade extends biz.c24.io.api.data.ComplexDataObject {
      */
     public void setTradeDate(java.time.LocalDate value) {
         this.tradeDate = value;
+    }
+
+    /**
+     * 
+     * 
+     * @param preon
+     */
+    public static biz.c24.trades.Trade toCdo(biz.c24.trades.preon.Trade preon) {
+        int index = preon.getBufferOffset();
+        byte[] data = preon.getPreonData();
+        int dataOffset = preon.getPreonDataOffset();
+        biz.c24.io.api.preon.typeHandler.PreonTypeHandler2 preonTypeHandler = biz.c24.trades.preon.Trade.getPreonTypeHandler();
+        biz.c24.trades.Trade cdo = new biz.c24.trades.Trade();
+
+        // Read ID
+        {
+            cdo.setID(preonTypeHandler.readLong(data, index));
+            index += preonTypeHandler.skipLong(data, index);
+        }
+        // Read TradeDate
+        {
+            cdo.setTradeDate(biz.c24.io.api.data.Java8Utils.fromIOType(preonTypeHandler.readISO8601Date(data, index)));
+            index += preonTypeHandler.skipISO8601Date(data, index);
+        }
+        // Read BuySell
+        {
+            cdo.setBuySell(preonTypeHandler.readString(data, index, biz.c24.trades.preon.Trade.BuySellCommonValues));
+            index += preonTypeHandler.skipString(data, index, biz.c24.trades.preon.Trade.BuySellCommonValues);
+        }
+        // Read Currency1
+        {
+            cdo.setCurrency1(preonTypeHandler.readString(data, index, biz.c24.trades.preon.Trade.Currency1CommonValues));
+            index += preonTypeHandler.skipString(data, index, biz.c24.trades.preon.Trade.Currency1CommonValues);
+        }
+        // Read Amount1
+        {
+            cdo.setAmount1(preonTypeHandler.readBigDecimal(data, index));
+            index += preonTypeHandler.skipBigDecimal(data, index);
+        }
+        // Read Exchange Rate
+        {
+            cdo.setExchangeRate(preonTypeHandler.readDouble(data, index));
+            index += preonTypeHandler.skipDouble(data, index);
+        }
+        // Read Currency2
+        {
+            cdo.setCurrency2(preonTypeHandler.readString(data, index, biz.c24.trades.preon.Trade.Currency2CommonValues));
+            index += preonTypeHandler.skipString(data, index, biz.c24.trades.preon.Trade.Currency2CommonValues);
+        }
+        // Read Amount2
+        {
+            cdo.setAmount2(preonTypeHandler.readBigDecimal(data, index));
+            index += preonTypeHandler.skipBigDecimal(data, index);
+        }
+        // Read Settlement Date
+        {
+            cdo.setSettlementDate(biz.c24.io.api.data.Java8Utils.fromIOType(preonTypeHandler.readISO8601Date(data, index)));
+            index += preonTypeHandler.skipISO8601Date(data, index);
+        }
+        return cdo;
+    }
+
+    /**
+     */
+    public biz.c24.trades.preon.Trade toPreon() throws java.io.IOException {
+        return toPreon(new biz.c24.io.api.presentation.stream.FastByteArrayOutputStream(48));
+    }
+
+    /**
+     * 
+     * 
+     * @param stream
+     */
+    public biz.c24.trades.preon.Trade toPreon(final biz.c24.io.api.presentation.stream.FastByteArrayOutputStream stream) throws java.io.IOException {
+        writePreon(stream, null);
+        biz.c24.trades.preon.Trade preon = biz.c24.trades.preon.Trade.allocate(stream.toByteArray(), 0);
+        return preon;
+    }
+
+    /**
+     */
+    public biz.c24.io.api.data.preon.util.PreonContext toPreonWithContext() throws java.io.IOException {
+        biz.c24.io.api.presentation.stream.FastByteArrayOutputStream stream = new biz.c24.io.api.presentation.stream.FastByteArrayOutputStream(48);
+        biz.c24.io.api.preon.typeHandler.PreonTypeHandler2 preonTypeHandler = biz.c24.trades.preon.Trade.getPreonTypeHandler();
+        biz.c24.io.api.data.preon.util.PreonContext preonContext = new biz.c24.io.api.data.preon.util.PreonContext("Root", null);
+        writePreon(stream, preonContext);
+        biz.c24.trades.preon.Trade preon = biz.c24.trades.preon.Trade.allocate(stream.toByteArray(), 0);
+        preonContext.setPreon(preon);
+        return preonContext;
+    }
+
+    /**
+     */
+    public void validateMandatory() throws biz.c24.io.api.data.ValidationException {
+        if (isIDSet()) {
+        } else {
+            biz.c24.io.api.data.ValidationManager mgr = new biz.c24.io.api.data.ValidationManager();
+            biz.c24.io.api.data.ValidationEvent event = new biz.c24.io.api.data.ValidationEvent(this, biz.c24.io.api.ValidationResultEnum.FAILED_SET_MISSING_MANDATORY_ELEMENTS, new biz.c24.io.api.data.EventMessage("Missing mandatory field ID"));
+            mgr.fireValidationEvent(event);
+        }
+        if (getTradeDate() != null) {
+        } else {
+            biz.c24.io.api.data.ValidationManager mgr = new biz.c24.io.api.data.ValidationManager();
+            biz.c24.io.api.data.ValidationEvent event = new biz.c24.io.api.data.ValidationEvent(this, biz.c24.io.api.ValidationResultEnum.FAILED_SET_MISSING_MANDATORY_ELEMENTS, new biz.c24.io.api.data.EventMessage("Missing mandatory field TradeDate"));
+            mgr.fireValidationEvent(event);
+        }
+        if (getBuySell() != null) {
+        } else {
+            biz.c24.io.api.data.ValidationManager mgr = new biz.c24.io.api.data.ValidationManager();
+            biz.c24.io.api.data.ValidationEvent event = new biz.c24.io.api.data.ValidationEvent(this, biz.c24.io.api.ValidationResultEnum.FAILED_SET_MISSING_MANDATORY_ELEMENTS, new biz.c24.io.api.data.EventMessage("Missing mandatory field BuySell"));
+            mgr.fireValidationEvent(event);
+        }
+        if (getCurrency1() != null) {
+        } else {
+            biz.c24.io.api.data.ValidationManager mgr = new biz.c24.io.api.data.ValidationManager();
+            biz.c24.io.api.data.ValidationEvent event = new biz.c24.io.api.data.ValidationEvent(this, biz.c24.io.api.ValidationResultEnum.FAILED_SET_MISSING_MANDATORY_ELEMENTS, new biz.c24.io.api.data.EventMessage("Missing mandatory field Currency1"));
+            mgr.fireValidationEvent(event);
+        }
+        if (getAmount1() != null) {
+        } else {
+            biz.c24.io.api.data.ValidationManager mgr = new biz.c24.io.api.data.ValidationManager();
+            biz.c24.io.api.data.ValidationEvent event = new biz.c24.io.api.data.ValidationEvent(this, biz.c24.io.api.ValidationResultEnum.FAILED_SET_MISSING_MANDATORY_ELEMENTS, new biz.c24.io.api.data.EventMessage("Missing mandatory field Amount1"));
+            mgr.fireValidationEvent(event);
+        }
+        if (isExchangeRateSet()) {
+        } else {
+            biz.c24.io.api.data.ValidationManager mgr = new biz.c24.io.api.data.ValidationManager();
+            biz.c24.io.api.data.ValidationEvent event = new biz.c24.io.api.data.ValidationEvent(this, biz.c24.io.api.ValidationResultEnum.FAILED_SET_MISSING_MANDATORY_ELEMENTS, new biz.c24.io.api.data.EventMessage("Missing mandatory field Exchange Rate"));
+            mgr.fireValidationEvent(event);
+        }
+        if (getCurrency2() != null) {
+        } else {
+            biz.c24.io.api.data.ValidationManager mgr = new biz.c24.io.api.data.ValidationManager();
+            biz.c24.io.api.data.ValidationEvent event = new biz.c24.io.api.data.ValidationEvent(this, biz.c24.io.api.ValidationResultEnum.FAILED_SET_MISSING_MANDATORY_ELEMENTS, new biz.c24.io.api.data.EventMessage("Missing mandatory field Currency2"));
+            mgr.fireValidationEvent(event);
+        }
+        if (getAmount2() != null) {
+        } else {
+            biz.c24.io.api.data.ValidationManager mgr = new biz.c24.io.api.data.ValidationManager();
+            biz.c24.io.api.data.ValidationEvent event = new biz.c24.io.api.data.ValidationEvent(this, biz.c24.io.api.ValidationResultEnum.FAILED_SET_MISSING_MANDATORY_ELEMENTS, new biz.c24.io.api.data.EventMessage("Missing mandatory field Amount2"));
+            mgr.fireValidationEvent(event);
+        }
+        if (getSettlementDate() != null) {
+        } else {
+            biz.c24.io.api.data.ValidationManager mgr = new biz.c24.io.api.data.ValidationManager();
+            biz.c24.io.api.data.ValidationEvent event = new biz.c24.io.api.data.ValidationEvent(this, biz.c24.io.api.ValidationResultEnum.FAILED_SET_MISSING_MANDATORY_ELEMENTS, new biz.c24.io.api.data.EventMessage("Missing mandatory field Settlement Date"));
+            mgr.fireValidationEvent(event);
+        }
+    }
+
+    /**
+     * 
+     * 
+     * @param stream
+     * @param preonContext
+     */
+    public int writePreon(final biz.c24.io.api.presentation.stream.FastByteArrayOutputStream stream,final biz.c24.io.api.data.preon.util.PreonContext preonContext) throws java.io.IOException {
+        biz.c24.io.api.preon.typeHandler.PreonTypeHandler2 preonTypeHandler = biz.c24.trades.preon.Trade.getPreonTypeHandler();
+        int length = 0;
+        if (preonContext != null) {
+            preonContext.add("Format Identifier", 2, length += preonTypeHandler.write(stream, 2));
+        } else {
+            length += preonTypeHandler.write(stream, 2);
+        }
+        length += writePreonData(stream, preonContext);
+        return length;
+    }
+
+    /**
+     * 
+     * 
+     * @param stream
+     * @param preonContext
+     */
+    public int writePreonData(final biz.c24.io.api.presentation.stream.FastByteArrayOutputStream stream,final biz.c24.io.api.data.preon.util.PreonContext preonContext) throws java.io.IOException {
+        biz.c24.io.api.preon.typeHandler.PreonTypeHandler2 preonTypeHandler = biz.c24.trades.preon.Trade.getPreonTypeHandler();
+        int startOffset = stream.size();
+
+
+        // Write ID
+        {
+            if (preonContext != null) {
+                preonContext.add("ID", getID(), preonTypeHandler.write(stream, getID()));
+            } else {
+                preonTypeHandler.write(stream, getID());
+            }
+        }
+        // Write TradeDate
+        {
+            if (preonContext != null) {
+                preonContext.add("TradeDate", biz.c24.io.api.data.Java8Utils.toIOType(getTradeDate()), preonTypeHandler.write(stream, biz.c24.io.api.data.Java8Utils.toIOType(getTradeDate())));
+            } else {
+                preonTypeHandler.write(stream, biz.c24.io.api.data.Java8Utils.toIOType(getTradeDate()));
+            }
+        }
+        // Write BuySell
+        {
+            if (preonContext != null) {
+                preonContext.add("BuySell", getBuySell(), preonTypeHandler.write(stream, getBuySell(), biz.c24.trades.preon.Trade.BuySellCommonValues));
+            } else {
+                preonTypeHandler.write(stream, getBuySell(), biz.c24.trades.preon.Trade.BuySellCommonValues);
+            }
+        }
+        // Write Currency1
+        {
+            if (preonContext != null) {
+                preonContext.add("Currency1", getCurrency1(), preonTypeHandler.write(stream, getCurrency1(), biz.c24.trades.preon.Trade.Currency1CommonValues));
+            } else {
+                preonTypeHandler.write(stream, getCurrency1(), biz.c24.trades.preon.Trade.Currency1CommonValues);
+            }
+        }
+        // Write Amount1
+        {
+            if (preonContext != null) {
+                preonContext.add("Amount1", getAmount1(), preonTypeHandler.write(stream, getAmount1()));
+            } else {
+                preonTypeHandler.write(stream, getAmount1());
+            }
+        }
+        // Write Exchange Rate
+        {
+            if (preonContext != null) {
+                preonContext.add("Exchange Rate", getExchangeRate(), preonTypeHandler.write(stream, getExchangeRate()));
+            } else {
+                preonTypeHandler.write(stream, getExchangeRate());
+            }
+        }
+        // Write Currency2
+        {
+            if (preonContext != null) {
+                preonContext.add("Currency2", getCurrency2(), preonTypeHandler.write(stream, getCurrency2(), biz.c24.trades.preon.Trade.Currency2CommonValues));
+            } else {
+                preonTypeHandler.write(stream, getCurrency2(), biz.c24.trades.preon.Trade.Currency2CommonValues);
+            }
+        }
+        // Write Amount2
+        {
+            if (preonContext != null) {
+                preonContext.add("Amount2", getAmount2(), preonTypeHandler.write(stream, getAmount2()));
+            } else {
+                preonTypeHandler.write(stream, getAmount2());
+            }
+        }
+        // Write Settlement Date
+        {
+            if (preonContext != null) {
+                preonContext.add("Settlement Date", biz.c24.io.api.data.Java8Utils.toIOType(getSettlementDate()), preonTypeHandler.write(stream, biz.c24.io.api.data.Java8Utils.toIOType(getSettlementDate())));
+            } else {
+                preonTypeHandler.write(stream, biz.c24.io.api.data.Java8Utils.toIOType(getSettlementDate()));
+            }
+        }
+        return stream.size() - startOffset;
     }
 
     /**

@@ -55,6 +55,7 @@ public class TradesElement extends biz.c24.io.api.data.Element {
 
     /**
      * Test method. Reads in a file (called <code>arg[0]</code>),
+     * or list of files based on the path argument. For each file
      * parses it, prints the output to Standard.out and validates
      * it.
      * 
@@ -63,38 +64,35 @@ public class TradesElement extends biz.c24.io.api.data.Element {
      * @param args
      */
     public static void main(java.lang.String[] args) {
-        if (args.length == 1)
-        {
-            biz.c24.io.api.data.Element element = biz.c24.trades.TradesElement.getInstance();
-            org.apache.log4j.Appender appender = new org.apache.log4j.ConsoleAppender(new org.apache.log4j.SimpleLayout());
-            element.getLog().addAppender(appender);
-            element.getLog().setLevel(org.apache.log4j.Level.OFF); // change this to see console logging
-
-            try
-            {
-                java.lang.System.out.println("Parsing... ");
-                biz.c24.io.api.presentation.Source source = element.getModel().source();
-                source.setInputStream(new java.io.FileInputStream(args[0]));
-                biz.c24.io.api.data.ComplexDataObject bean = source.readObject(element);
-                source.getInputStream().close();
-                java.lang.System.out.println(bean.toString());
-
-                java.lang.System.out.println("Validating... ");
-                new biz.c24.io.api.data.ValidationManager().validateByException(bean);
-
-                java.lang.System.out.println("Finished");
+        // Use C24.init().withLicence(licencePath) to specify a licence path
+        if (args.length == 1) {
+            java.io.File path = new java.io.File(args[0]);
+            java.io.File[] files;
+            if (path.isDirectory()) {
+                files = path.listFiles();
+            } else {
+                files = new java.io.File[]{path};
             }
-            catch (java.lang.Exception e)
-            {
-                e.printStackTrace();
+            for (java.io.File file : files) {
+                try {
+                    java.lang.System.out.println(java.lang.String.format("%s\t->\t", file.getName()));
+                    biz.c24.io.api.data.ComplexDataObject message = (biz.c24.io.api.data.ComplexDataObject) biz.c24.io.api.C24.parse(biz.c24.trades.TradesElement.getInstance()).from(file);
+                    biz.c24.io.api.data.ValidationEvent[] validationEvents = biz.c24.io.api.C24.validateFully(message);
+                    if (validationEvents == null) {
+                        java.lang.System.out.println(java.lang.String.format("VALID%n"));
+                        biz.c24.io.api.C24.write(message).to(java.lang.System.out);
+                    } else {
+                        for (biz.c24.io.api.data.ValidationEvent event : validationEvents) {
+                            java.lang.System.out.println(java.lang.String.format("INVALID %s: %s%n", event.getLocation(), event.getMessage()));
+                        }
+                    }
+                } catch (java.io.IOException e) {
+                    java.lang.System.out.println(java.lang.String.format("IOException: %s%n", e.getMessage()));
+                }
             }
-            finally
-            {
-                element.getLog().removeAppender(appender);
-            }
+        } else {
+            java.lang.System.out.println("Usage: java biz.c24.trades.TradesElement <filename or directory>");
         }
-        else
-            java.lang.System.out.println("Usage: java biz.c24.trades.TradesElement <filename>");
     }
 
     /**

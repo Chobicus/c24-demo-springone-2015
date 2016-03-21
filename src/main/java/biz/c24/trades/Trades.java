@@ -24,7 +24,9 @@ import java.util.Arrays;
  * @version $Revision$ $Date$
  * @see biz.c24.trades.TradesDataType
  */
-public class Trades extends biz.c24.io.api.data.ComplexDataObject {
+public class Trades extends biz.c24.io.api.data.ComplexDataObject 
+implements biz.c24.io.api.data.preon.util.PreonConvertible
+{
 
     /**
      * Field serialVersionUID.
@@ -129,8 +131,8 @@ public class Trades extends biz.c24.io.api.data.ComplexDataObject {
      * 
      * @param buffer
      */
-    public biz.c24.io.api.data.SimpleDataObject createSDO(byte[] buffer) {
-        return new biz.c24.trades.sdo.Trades(buffer, 0);
+    public biz.c24.io.api.data.preon.PreonDataObject createPREON(byte[] buffer) {
+        return new biz.c24.trades.preon.Trades(buffer, 0);
     }
 
     /**
@@ -228,6 +230,18 @@ public class Trades extends biz.c24.io.api.data.ComplexDataObject {
             default:
                 return super.getElementIndex(name, element);
         }
+    }
+
+    /**
+     */
+    public Class<? extends biz.c24.trades.preon.Trades> getPreonClass() {
+        return biz.c24.trades.preon.Trades.class;
+    }
+
+    /**
+     */
+    public biz.c24.io.api.preon.typeHandler.PreonTypeHandler2 getPreonTypeHandler() {
+        return biz.c24.trades.preon.Trades.getPreonTypeHandler();
     }
 
     /**
@@ -392,6 +406,122 @@ public class Trades extends biz.c24.io.api.data.ComplexDataObject {
         this.trade = value;
         for (int i=0; this.trade != null && i<this.trade.size(); i++)
             ((biz.c24.io.api.data.ComplexDataObject) this.trade.get(i)).setParent(this, "Trade");
+    }
+
+    /**
+     * 
+     * 
+     * @param preon
+     */
+    public static biz.c24.trades.Trades toCdo(biz.c24.trades.preon.Trades preon) {
+        int index = preon.getBufferOffset();
+        byte[] data = preon.getPreonData();
+        int dataOffset = preon.getPreonDataOffset();
+        biz.c24.io.api.preon.typeHandler.PreonTypeHandler2 preonTypeHandler = biz.c24.trades.preon.Trades.getPreonTypeHandler();
+        biz.c24.trades.Trades cdo = new biz.c24.trades.Trades();
+
+        // Read Trade
+        {
+            int cardinality = preonTypeHandler.readInt(data, index);
+            index += preonTypeHandler.skipInt(data, index);
+            java.util.List<biz.c24.trades.Trade> list = new java.util.LinkedList<biz.c24.trades.Trade>();
+            for(int i=0; i < cardinality; i++) {
+                int length = preonTypeHandler.readInt(data, index);
+                index += preonTypeHandler.skipInt(data, index);
+                index += length;
+                biz.c24.trades.Trade childCdo = biz.c24.trades.Trade.toCdo(biz.c24.trades.preon.Trade.allocate(data, dataOffset, index - length));
+                list.add(childCdo);
+            }
+            cdo.setTrade(list);
+        }
+        return cdo;
+    }
+
+    /**
+     */
+    public biz.c24.trades.preon.Trades toPreon() throws java.io.IOException {
+        return toPreon(new biz.c24.io.api.presentation.stream.FastByteArrayOutputStream(48));
+    }
+
+    /**
+     * 
+     * 
+     * @param stream
+     */
+    public biz.c24.trades.preon.Trades toPreon(final biz.c24.io.api.presentation.stream.FastByteArrayOutputStream stream) throws java.io.IOException {
+        writePreon(stream, null);
+        biz.c24.trades.preon.Trades preon = biz.c24.trades.preon.Trades.allocate(stream.toByteArray(), 0);
+        return preon;
+    }
+
+    /**
+     */
+    public biz.c24.io.api.data.preon.util.PreonContext toPreonWithContext() throws java.io.IOException {
+        biz.c24.io.api.presentation.stream.FastByteArrayOutputStream stream = new biz.c24.io.api.presentation.stream.FastByteArrayOutputStream(48);
+        biz.c24.io.api.preon.typeHandler.PreonTypeHandler2 preonTypeHandler = biz.c24.trades.preon.Trades.getPreonTypeHandler();
+        biz.c24.io.api.data.preon.util.PreonContext preonContext = new biz.c24.io.api.data.preon.util.PreonContext("Root", null);
+        writePreon(stream, preonContext);
+        biz.c24.trades.preon.Trades preon = biz.c24.trades.preon.Trades.allocate(stream.toByteArray(), 0);
+        preonContext.setPreon(preon);
+        return preonContext;
+    }
+
+    /**
+     */
+    public void validateMandatory() throws biz.c24.io.api.data.ValidationException {
+        if (getTrade() != null && getTrade().size() > 0) {
+            for(biz.c24.trades.Trade child : (java.util.Collection<biz.c24.trades.Trade>)getTrade()) {
+                child.validateMandatory();
+            }
+        } else {
+            biz.c24.io.api.data.ValidationManager mgr = new biz.c24.io.api.data.ValidationManager();
+            biz.c24.io.api.data.ValidationEvent event = new biz.c24.io.api.data.ValidationEvent(this, biz.c24.io.api.ValidationResultEnum.FAILED_SET_MISSING_MANDATORY_ELEMENTS, new biz.c24.io.api.data.EventMessage("Missing mandatory field Trade"));
+            mgr.fireValidationEvent(event);
+        }
+    }
+
+    /**
+     * 
+     * 
+     * @param stream
+     * @param preonContext
+     */
+    public int writePreon(final biz.c24.io.api.presentation.stream.FastByteArrayOutputStream stream,final biz.c24.io.api.data.preon.util.PreonContext preonContext) throws java.io.IOException {
+        biz.c24.io.api.preon.typeHandler.PreonTypeHandler2 preonTypeHandler = biz.c24.trades.preon.Trades.getPreonTypeHandler();
+        int length = 0;
+        if (preonContext != null) {
+            preonContext.add("Format Identifier", 2, length += preonTypeHandler.write(stream, 2));
+        } else {
+            length += preonTypeHandler.write(stream, 2);
+        }
+        length += writePreonData(stream, preonContext);
+        return length;
+    }
+
+    /**
+     * 
+     * 
+     * @param stream
+     * @param preonContext
+     */
+    public int writePreonData(final biz.c24.io.api.presentation.stream.FastByteArrayOutputStream stream,final biz.c24.io.api.data.preon.util.PreonContext preonContext) throws java.io.IOException {
+        biz.c24.io.api.preon.typeHandler.PreonTypeHandler2 preonTypeHandler = biz.c24.trades.preon.Trades.getPreonTypeHandler();
+        int startOffset = stream.size();
+
+
+        // Write Trade
+        {
+            int cardinality = getTrade().size();
+            if (preonContext != null) {
+                preonContext.add("Cardinality", cardinality, preonTypeHandler.write(stream, cardinality));
+            } else {
+                preonTypeHandler.write(stream, cardinality);
+            }
+            for(int i=0; i < cardinality; i++) {
+                writePreon(stream, getTrade(i), "Trade", preonTypeHandler, preonContext);
+            }
+        }
+        return stream.size() - startOffset;
     }
 
     /**
